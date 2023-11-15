@@ -1,13 +1,11 @@
 import ply.lex as lex
 
-tokens = ('IF','FOR','WHILE',
+tokens = ('FOR',
         'LBRACKET','RBRACKET',
-        'LESSER',
-        'GREATER','NUM',
-        'NOT',
-        'AND',
-        'OR',
-        'EQUALS',
+        
+        'NUM',
+        
+    
         'LFLOWER',
         'RFLOWER','NEXT','COLON',
         'ID','IN')
@@ -18,9 +16,7 @@ t_LFLOWER=r'\{'
 
 
 
-def t_IF(t):
-    r'if'
-    return t
+
 
 def t_FOR(t):
     r'for'
@@ -31,9 +27,6 @@ def t_COLON(t):
     return t
     
 
-def t_WHILE(t):
-    r'while'
-    return t
 
 def t_NEXT(t):
     r'next'
@@ -53,15 +46,10 @@ t_ignore = ' \t'
 
 
 def t_ID(t):
-    r'\b([a-zA-Z_][a-zA-Z_0-9]*)\b |\b(\d+)\b'
+    r'\b([a-zA-Z_=][a-zA-Z_0-9=]*)\b |\b(\d+)\b'
     return t
 
-t_LESSER = r'<'
-t_GREATER = r'>'
-t_EQUALS = r'=(=)?'
-t_NOT = r'!'
-t_AND = r'&&'
-t_OR = r'\|\|'
+
 
 def t_error(t):
     print(f"Illegal character encountered {t.value[0]}")

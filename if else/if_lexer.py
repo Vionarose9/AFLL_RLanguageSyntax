@@ -1,7 +1,5 @@
 import ply.lex as lex
-tokens=('IF','LEFTBRACKET','RIGHTBRACKET','RIGHTBRACE','LEFTBRACE','ELSE','ID',
-          
-          'LESSER',
+tokens=('IF','LEFTBRACKET','RIGHTBRACKET','RIGHTBRACE','LEFTBRACE','ELSE','ID','LESSER',
           'GREATER',
           'EQUALS',
           'NOT',
@@ -24,7 +22,7 @@ def t_ELSE(t):
     return t
 
 def t_ID(t):
-    r'\b([a-zA-Z_][a-zA-Z_0-9]*)\b |\b(\d+)\b'
+    r'\b([a-zA-Z_=][a-zA-Z_0-9]*)\b |\b(\d+)\b'
     return t
 
 t_LESSER = r'<'

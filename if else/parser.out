@@ -1,61 +1,59 @@
 Created by PLY version 3.11 (http://www.dabeaz.com/ply)
 
-Unused terminals:
-
-    ELSE
-
 Grammar
 
 Rule 0     S' -> ifstmt
 Rule 1     ifstmt -> IF LEFTBRACKET conditions RIGHTBRACKET LEFTBRACE statements RIGHTBRACE
 Rule 2     ifstmt -> IF LEFTBRACKET conditions RIGHTBRACKET statementSingle
-Rule 3     statements -> statements statement
-Rule 4     statements -> statement
-Rule 5     statement -> list
-Rule 6     statement -> ifstmt
-Rule 7     statement -> empty
-Rule 8     statementSingle -> ifstmt
-Rule 9     statementSingle -> list
-Rule 10    statementSingle -> empty
-Rule 11    list -> ID list
-Rule 12    list -> ID
-Rule 13    empty -> <empty>
-Rule 14    conditions -> ID EQUALS ID
-Rule 15    conditions -> ID GREATER ID
-Rule 16    conditions -> ID LESSER ID
-Rule 17    conditions -> ID GREATER EQUALS ID
-Rule 18    conditions -> ID LESSER EQUALS ID
-Rule 19    conditions -> ID NOT EQUALS ID
-Rule 20    conditions -> conditions AND conditions
-Rule 21    conditions -> conditions OR conditions
-Rule 22    conditions -> ID
+Rule 3     ifstmt -> IF LEFTBRACKET conditions RIGHTBRACKET LEFTBRACE statements RIGHTBRACE ELSE LEFTBRACE statements RIGHTBRACE
+Rule 4     ifstmt -> IF LEFTBRACKET conditions RIGHTBRACKET statements ELSE statements
+Rule 5     statements -> statements statement
+Rule 6     statements -> statement
+Rule 7     statement -> list
+Rule 8     statement -> ifstmt
+Rule 9     statement -> empty
+Rule 10    statementSingle -> ifstmt
+Rule 11    statementSingle -> list
+Rule 12    statementSingle -> empty
+Rule 13    list -> ID list
+Rule 14    list -> ID
+Rule 15    empty -> <empty>
+Rule 16    conditions -> ID EQUALS ID
+Rule 17    conditions -> ID GREATER ID
+Rule 18    conditions -> ID LESSER ID
+Rule 19    conditions -> ID GREATER EQUALS ID
+Rule 20    conditions -> ID LESSER EQUALS ID
+Rule 21    conditions -> ID NOT EQUALS ID
+Rule 22    conditions -> conditions AND conditions
+Rule 23    conditions -> conditions OR conditions
+Rule 24    conditions -> ID
 
 Terminals, with rules where they appear
 
-AND                  : 20
-ELSE                 : 
-EQUALS               : 14 17 18 19
-GREATER              : 15 17
-ID                   : 11 12 14 14 15 15 16 16 17 17 18 18 19 19 22
-IF                   : 1 2
-LEFTBRACE            : 1
-LEFTBRACKET          : 1 2
-LESSER               : 16 18
-NOT                  : 19
-OR                   : 21
-RIGHTBRACE           : 1
-RIGHTBRACKET         : 1 2
+AND                  : 22
+ELSE                 : 3 4
+EQUALS               : 16 19 20 21
+GREATER              : 17 19
+ID                   : 13 14 16 16 17 17 18 18 19 19 20 20 21 21 24
+IF                   : 1 2 3 4
+LEFTBRACE            : 1 3 3
+LEFTBRACKET          : 1 2 3 4
+LESSER               : 18 20
+NOT                  : 21
+OR                   : 23
+RIGHTBRACE           : 1 3 3
+RIGHTBRACKET         : 1 2 3 4
 error                : 
 
 Nonterminals, with rules where they appear
 
-conditions           : 1 2 20 20 21 21
-empty                : 7 10
-ifstmt               : 6 8 0
-list                 : 5 9 11
-statement            : 3 4
+conditions           : 1 2 3 4 22 22 23 23
+empty                : 9 12
+ifstmt               : 8 10 0
+list                 : 7 11 13
+statement            : 5 6
 statementSingle      : 2
-statements           : 1 3
+statements           : 1 3 3 4 4 5
 
 Parsing method: LALR
 
@@ -64,6 +62,8 @@ state 0
     (0) S' -> . ifstmt
     (1) ifstmt -> . IF LEFTBRACKET conditions RIGHTBRACKET LEFTBRACE statements RIGHTBRACE
     (2) ifstmt -> . IF LEFTBRACKET conditions RIGHTBRACKET statementSingle
+    (3) ifstmt -> . IF LEFTBRACKET conditions RIGHTBRACKET LEFTBRACE statements RIGHTBRACE ELSE LEFTBRACE statements RIGHTBRACE
+    (4) ifstmt -> . IF LEFTBRACKET conditions RIGHTBRACKET statements ELSE statements
 
     IF              shift and go to state 2
 
@@ -79,6 +79,8 @@ state 2
 
     (1) ifstmt -> IF . LEFTBRACKET conditions RIGHTBRACKET LEFTBRACE statements RIGHTBRACE
     (2) ifstmt -> IF . LEFTBRACKET conditions RIGHTBRACKET statementSingle
+    (3) ifstmt -> IF . LEFTBRACKET conditions RIGHTBRACKET LEFTBRACE statements RIGHTBRACE ELSE LEFTBRACE statements RIGHTBRACE
+    (4) ifstmt -> IF . LEFTBRACKET conditions RIGHTBRACKET statements ELSE statements
 
     LEFTBRACKET     shift and go to state 3
 
@@ -87,15 +89,17 @@ state 3
 
     (1) ifstmt -> IF LEFTBRACKET . conditions RIGHTBRACKET LEFTBRACE statements RIGHTBRACE
     (2) ifstmt -> IF LEFTBRACKET . conditions RIGHTBRACKET statementSingle
-    (14) conditions -> . ID EQUALS ID
-    (15) conditions -> . ID GREATER ID
-    (16) conditions -> . ID LESSER ID
-    (17) conditions -> . ID GREATER EQUALS ID
-    (18) conditions -> . ID LESSER EQUALS ID
-    (19) conditions -> . ID NOT EQUALS ID
-    (20) conditions -> . conditions AND conditions
-    (21) conditions -> . conditions OR conditions
-    (22) conditions -> . ID
+    (3) ifstmt -> IF LEFTBRACKET . conditions RIGHTBRACKET LEFTBRACE statements RIGHTBRACE ELSE LEFTBRACE statements RIGHTBRACE
+    (4) ifstmt -> IF LEFTBRACKET . conditions RIGHTBRACKET statements ELSE statements
+    (16) conditions -> . ID EQUALS ID
+    (17) conditions -> . ID GREATER ID
+    (18) conditions -> . ID LESSER ID
+    (19) conditions -> . ID GREATER EQUALS ID
+    (20) conditions -> . ID LESSER EQUALS ID
+    (21) conditions -> . ID NOT EQUALS ID
+    (22) conditions -> . conditions AND conditions
+    (23) conditions -> . conditions OR conditions
+    (24) conditions -> . ID
 
     ID              shift and go to state 5
 
@@ -105,8 +109,10 @@ state 4
 
     (1) ifstmt -> IF LEFTBRACKET conditions . RIGHTBRACKET LEFTBRACE statements RIGHTBRACE
     (2) ifstmt -> IF LEFTBRACKET conditions . RIGHTBRACKET statementSingle
-    (20) conditions -> conditions . AND conditions
-    (21) conditions -> conditions . OR conditions
+    (3) ifstmt -> IF LEFTBRACKET conditions . RIGHTBRACKET LEFTBRACE statements RIGHTBRACE ELSE LEFTBRACE statements RIGHTBRACE
+    (4) ifstmt -> IF LEFTBRACKET conditions . RIGHTBRACKET statements ELSE statements
+    (22) conditions -> conditions . AND conditions
+    (23) conditions -> conditions . OR conditions
 
     RIGHTBRACKET    shift and go to state 6
     AND             shift and go to state 7
@@ -115,403 +121,651 @@ state 4
 
 state 5
 
-    (14) conditions -> ID . EQUALS ID
-    (15) conditions -> ID . GREATER ID
-    (16) conditions -> ID . LESSER ID
-    (17) conditions -> ID . GREATER EQUALS ID
-    (18) conditions -> ID . LESSER EQUALS ID
-    (19) conditions -> ID . NOT EQUALS ID
-    (22) conditions -> ID .
+    (16) conditions -> ID . EQUALS ID
+    (17) conditions -> ID . GREATER ID
+    (18) conditions -> ID . LESSER ID
+    (19) conditions -> ID . GREATER EQUALS ID
+    (20) conditions -> ID . LESSER EQUALS ID
+    (21) conditions -> ID . NOT EQUALS ID
+    (24) conditions -> ID .
 
     EQUALS          shift and go to state 9
     GREATER         shift and go to state 10
     LESSER          shift and go to state 11
     NOT             shift and go to state 12
-    RIGHTBRACKET    reduce using rule 22 (conditions -> ID .)
-    AND             reduce using rule 22 (conditions -> ID .)
-    OR              reduce using rule 22 (conditions -> ID .)
+    RIGHTBRACKET    reduce using rule 24 (conditions -> ID .)
+    AND             reduce using rule 24 (conditions -> ID .)
+    OR              reduce using rule 24 (conditions -> ID .)
 
 
 state 6
 
     (1) ifstmt -> IF LEFTBRACKET conditions RIGHTBRACKET . LEFTBRACE statements RIGHTBRACE
     (2) ifstmt -> IF LEFTBRACKET conditions RIGHTBRACKET . statementSingle
-    (8) statementSingle -> . ifstmt
-    (9) statementSingle -> . list
-    (10) statementSingle -> . empty
+    (3) ifstmt -> IF LEFTBRACKET conditions RIGHTBRACKET . LEFTBRACE statements RIGHTBRACE ELSE LEFTBRACE statements RIGHTBRACE
+    (4) ifstmt -> IF LEFTBRACKET conditions RIGHTBRACKET . statements ELSE statements
+    (10) statementSingle -> . ifstmt
+    (11) statementSingle -> . list
+    (12) statementSingle -> . empty
+    (5) statements -> . statements statement
+    (6) statements -> . statement
     (1) ifstmt -> . IF LEFTBRACKET conditions RIGHTBRACKET LEFTBRACE statements RIGHTBRACE
     (2) ifstmt -> . IF LEFTBRACKET conditions RIGHTBRACKET statementSingle
-    (11) list -> . ID list
-    (12) list -> . ID
-    (13) empty -> .
+    (3) ifstmt -> . IF LEFTBRACKET conditions RIGHTBRACKET LEFTBRACE statements RIGHTBRACE ELSE LEFTBRACE statements RIGHTBRACE
+    (4) ifstmt -> . IF LEFTBRACKET conditions RIGHTBRACKET statements ELSE statements
+    (13) list -> . ID list
+    (14) list -> . ID
+    (15) empty -> .
+    (7) statement -> . list
+    (8) statement -> . ifstmt
+    (9) statement -> . empty
 
   ! shift/reduce conflict for ID resolved as shift
   ! shift/reduce conflict for IF resolved as shift
     LEFTBRACE       shift and go to state 13
     IF              shift and go to state 2
-    ID              shift and go to state 18
-    $end            reduce using rule 13 (empty -> .)
-    RIGHTBRACE      reduce using rule 13 (empty -> .)
+    ID              shift and go to state 20
+    $end            reduce using rule 15 (empty -> .)
+    ELSE            reduce using rule 15 (empty -> .)
+    RIGHTBRACE      reduce using rule 15 (empty -> .)
 
-  ! ID              [ reduce using rule 13 (empty -> .) ]
-  ! IF              [ reduce using rule 13 (empty -> .) ]
+  ! ID              [ reduce using rule 15 (empty -> .) ]
+  ! IF              [ reduce using rule 15 (empty -> .) ]
 
-    statementSingle                shift and go to state 14
-    ifstmt                         shift and go to state 15
-    list                           shift and go to state 16
-    empty                          shift and go to state 17
+    statements                     shift and go to state 14
+    statementSingle                shift and go to state 15
+    ifstmt                         shift and go to state 16
+    list                           shift and go to state 17
+    empty                          shift and go to state 18
+    statement                      shift and go to state 19
 
 state 7
 
-    (20) conditions -> conditions AND . conditions
-    (14) conditions -> . ID EQUALS ID
-    (15) conditions -> . ID GREATER ID
-    (16) conditions -> . ID LESSER ID
-    (17) conditions -> . ID GREATER EQUALS ID
-    (18) conditions -> . ID LESSER EQUALS ID
-    (19) conditions -> . ID NOT EQUALS ID
-    (20) conditions -> . conditions AND conditions
-    (21) conditions -> . conditions OR conditions
-    (22) conditions -> . ID
+    (22) conditions -> conditions AND . conditions
+    (16) conditions -> . ID EQUALS ID
+    (17) conditions -> . ID GREATER ID
+    (18) conditions -> . ID LESSER ID
+    (19) conditions -> . ID GREATER EQUALS ID
+    (20) conditions -> . ID LESSER EQUALS ID
+    (21) conditions -> . ID NOT EQUALS ID
+    (22) conditions -> . conditions AND conditions
+    (23) conditions -> . conditions OR conditions
+    (24) conditions -> . ID
 
     ID              shift and go to state 5
 
-    conditions                     shift and go to state 19
+    conditions                     shift and go to state 21
 
 state 8
 
-    (21) conditions -> conditions OR . conditions
-    (14) conditions -> . ID EQUALS ID
-    (15) conditions -> . ID GREATER ID
-    (16) conditions -> . ID LESSER ID
-    (17) conditions -> . ID GREATER EQUALS ID
-    (18) conditions -> . ID LESSER EQUALS ID
-    (19) conditions -> . ID NOT EQUALS ID
-    (20) conditions -> . conditions AND conditions
-    (21) conditions -> . conditions OR conditions
-    (22) conditions -> . ID
+    (23) conditions -> conditions OR . conditions
+    (16) conditions -> . ID EQUALS ID
+    (17) conditions -> . ID GREATER ID
+    (18) conditions -> . ID LESSER ID
+    (19) conditions -> . ID GREATER EQUALS ID
+    (20) conditions -> . ID LESSER EQUALS ID
+    (21) conditions -> . ID NOT EQUALS ID
+    (22) conditions -> . conditions AND conditions
+    (23) conditions -> . conditions OR conditions
+    (24) conditions -> . ID
 
     ID              shift and go to state 5
 
-    conditions                     shift and go to state 20
+    conditions                     shift and go to state 22
 
 state 9
 
-    (14) conditions -> ID EQUALS . ID
+    (16) conditions -> ID EQUALS . ID
 
-    ID              shift and go to state 21
+    ID              shift and go to state 23
 
 
 state 10
 
-    (15) conditions -> ID GREATER . ID
-    (17) conditions -> ID GREATER . EQUALS ID
-
-    ID              shift and go to state 22
-    EQUALS          shift and go to state 23
-
-
-state 11
-
-    (16) conditions -> ID LESSER . ID
-    (18) conditions -> ID LESSER . EQUALS ID
+    (17) conditions -> ID GREATER . ID
+    (19) conditions -> ID GREATER . EQUALS ID
 
     ID              shift and go to state 24
     EQUALS          shift and go to state 25
 
 
+state 11
+
+    (18) conditions -> ID LESSER . ID
+    (20) conditions -> ID LESSER . EQUALS ID
+
+    ID              shift and go to state 26
+    EQUALS          shift and go to state 27
+
+
 state 12
 
-    (19) conditions -> ID NOT . EQUALS ID
+    (21) conditions -> ID NOT . EQUALS ID
 
-    EQUALS          shift and go to state 26
+    EQUALS          shift and go to state 28
 
 
 state 13
 
     (1) ifstmt -> IF LEFTBRACKET conditions RIGHTBRACKET LEFTBRACE . statements RIGHTBRACE
-    (3) statements -> . statements statement
-    (4) statements -> . statement
-    (5) statement -> . list
-    (6) statement -> . ifstmt
-    (7) statement -> . empty
-    (11) list -> . ID list
-    (12) list -> . ID
+    (3) ifstmt -> IF LEFTBRACKET conditions RIGHTBRACKET LEFTBRACE . statements RIGHTBRACE ELSE LEFTBRACE statements RIGHTBRACE
+    (5) statements -> . statements statement
+    (6) statements -> . statement
+    (7) statement -> . list
+    (8) statement -> . ifstmt
+    (9) statement -> . empty
+    (13) list -> . ID list
+    (14) list -> . ID
     (1) ifstmt -> . IF LEFTBRACKET conditions RIGHTBRACKET LEFTBRACE statements RIGHTBRACE
     (2) ifstmt -> . IF LEFTBRACKET conditions RIGHTBRACKET statementSingle
-    (13) empty -> .
+    (3) ifstmt -> . IF LEFTBRACKET conditions RIGHTBRACKET LEFTBRACE statements RIGHTBRACE ELSE LEFTBRACE statements RIGHTBRACE
+    (4) ifstmt -> . IF LEFTBRACKET conditions RIGHTBRACKET statements ELSE statements
+    (15) empty -> .
 
   ! shift/reduce conflict for ID resolved as shift
   ! shift/reduce conflict for IF resolved as shift
-    ID              shift and go to state 18
+    ID              shift and go to state 20
     IF              shift and go to state 2
-    RIGHTBRACE      reduce using rule 13 (empty -> .)
+    RIGHTBRACE      reduce using rule 15 (empty -> .)
 
-  ! ID              [ reduce using rule 13 (empty -> .) ]
-  ! IF              [ reduce using rule 13 (empty -> .) ]
+  ! ID              [ reduce using rule 15 (empty -> .) ]
+  ! IF              [ reduce using rule 15 (empty -> .) ]
 
-    statements                     shift and go to state 27
-    statement                      shift and go to state 28
-    list                           shift and go to state 29
-    ifstmt                         shift and go to state 30
-    empty                          shift and go to state 31
+    statements                     shift and go to state 29
+    statement                      shift and go to state 19
+    list                           shift and go to state 30
+    ifstmt                         shift and go to state 31
+    empty                          shift and go to state 32
 
 state 14
+
+    (4) ifstmt -> IF LEFTBRACKET conditions RIGHTBRACKET statements . ELSE statements
+    (5) statements -> statements . statement
+    (7) statement -> . list
+    (8) statement -> . ifstmt
+    (9) statement -> . empty
+    (13) list -> . ID list
+    (14) list -> . ID
+    (1) ifstmt -> . IF LEFTBRACKET conditions RIGHTBRACKET LEFTBRACE statements RIGHTBRACE
+    (2) ifstmt -> . IF LEFTBRACKET conditions RIGHTBRACKET statementSingle
+    (3) ifstmt -> . IF LEFTBRACKET conditions RIGHTBRACKET LEFTBRACE statements RIGHTBRACE ELSE LEFTBRACE statements RIGHTBRACE
+    (4) ifstmt -> . IF LEFTBRACKET conditions RIGHTBRACKET statements ELSE statements
+    (15) empty -> .
+
+  ! shift/reduce conflict for ELSE resolved as shift
+  ! shift/reduce conflict for ID resolved as shift
+  ! shift/reduce conflict for IF resolved as shift
+    ELSE            shift and go to state 33
+    ID              shift and go to state 20
+    IF              shift and go to state 2
+
+  ! ELSE            [ reduce using rule 15 (empty -> .) ]
+  ! ID              [ reduce using rule 15 (empty -> .) ]
+  ! IF              [ reduce using rule 15 (empty -> .) ]
+
+    statement                      shift and go to state 34
+    list                           shift and go to state 30
+    ifstmt                         shift and go to state 31
+    empty                          shift and go to state 32
+
+state 15
 
     (2) ifstmt -> IF LEFTBRACKET conditions RIGHTBRACKET statementSingle .
 
     $end            reduce using rule 2 (ifstmt -> IF LEFTBRACKET conditions RIGHTBRACKET statementSingle .)
-    RIGHTBRACE      reduce using rule 2 (ifstmt -> IF LEFTBRACKET conditions RIGHTBRACKET statementSingle .)
+    ELSE            reduce using rule 2 (ifstmt -> IF LEFTBRACKET conditions RIGHTBRACKET statementSingle .)
     ID              reduce using rule 2 (ifstmt -> IF LEFTBRACKET conditions RIGHTBRACKET statementSingle .)
     IF              reduce using rule 2 (ifstmt -> IF LEFTBRACKET conditions RIGHTBRACKET statementSingle .)
-
-
-state 15
-
-    (8) statementSingle -> ifstmt .
-
-    $end            reduce using rule 8 (statementSingle -> ifstmt .)
-    RIGHTBRACE      reduce using rule 8 (statementSingle -> ifstmt .)
-    ID              reduce using rule 8 (statementSingle -> ifstmt .)
-    IF              reduce using rule 8 (statementSingle -> ifstmt .)
+    RIGHTBRACE      reduce using rule 2 (ifstmt -> IF LEFTBRACKET conditions RIGHTBRACKET statementSingle .)
 
 
 state 16
 
-    (9) statementSingle -> list .
+    (10) statementSingle -> ifstmt .
+    (8) statement -> ifstmt .
 
-    $end            reduce using rule 9 (statementSingle -> list .)
-    RIGHTBRACE      reduce using rule 9 (statementSingle -> list .)
-    ID              reduce using rule 9 (statementSingle -> list .)
-    IF              reduce using rule 9 (statementSingle -> list .)
+  ! reduce/reduce conflict for ELSE resolved using rule 8 (statement -> ifstmt .)
+  ! reduce/reduce conflict for ID resolved using rule 8 (statement -> ifstmt .)
+  ! reduce/reduce conflict for IF resolved using rule 8 (statement -> ifstmt .)
+    $end            reduce using rule 10 (statementSingle -> ifstmt .)
+    RIGHTBRACE      reduce using rule 10 (statementSingle -> ifstmt .)
+    ELSE            reduce using rule 8 (statement -> ifstmt .)
+    ID              reduce using rule 8 (statement -> ifstmt .)
+    IF              reduce using rule 8 (statement -> ifstmt .)
+
+  ! ELSE            [ reduce using rule 10 (statementSingle -> ifstmt .) ]
+  ! ID              [ reduce using rule 10 (statementSingle -> ifstmt .) ]
+  ! IF              [ reduce using rule 10 (statementSingle -> ifstmt .) ]
 
 
 state 17
 
-    (10) statementSingle -> empty .
+    (11) statementSingle -> list .
+    (7) statement -> list .
 
-    $end            reduce using rule 10 (statementSingle -> empty .)
-    RIGHTBRACE      reduce using rule 10 (statementSingle -> empty .)
-    ID              reduce using rule 10 (statementSingle -> empty .)
-    IF              reduce using rule 10 (statementSingle -> empty .)
+  ! reduce/reduce conflict for ELSE resolved using rule 7 (statement -> list .)
+  ! reduce/reduce conflict for ID resolved using rule 7 (statement -> list .)
+  ! reduce/reduce conflict for IF resolved using rule 7 (statement -> list .)
+    $end            reduce using rule 11 (statementSingle -> list .)
+    RIGHTBRACE      reduce using rule 11 (statementSingle -> list .)
+    ELSE            reduce using rule 7 (statement -> list .)
+    ID              reduce using rule 7 (statement -> list .)
+    IF              reduce using rule 7 (statement -> list .)
+
+  ! ELSE            [ reduce using rule 11 (statementSingle -> list .) ]
+  ! ID              [ reduce using rule 11 (statementSingle -> list .) ]
+  ! IF              [ reduce using rule 11 (statementSingle -> list .) ]
 
 
 state 18
 
-    (11) list -> ID . list
-    (12) list -> ID .
-    (11) list -> . ID list
-    (12) list -> . ID
+    (12) statementSingle -> empty .
+    (9) statement -> empty .
 
-  ! shift/reduce conflict for ID resolved as shift
-    $end            reduce using rule 12 (list -> ID .)
-    RIGHTBRACE      reduce using rule 12 (list -> ID .)
-    IF              reduce using rule 12 (list -> ID .)
-    ID              shift and go to state 18
+  ! reduce/reduce conflict for ELSE resolved using rule 9 (statement -> empty .)
+  ! reduce/reduce conflict for ID resolved using rule 9 (statement -> empty .)
+  ! reduce/reduce conflict for IF resolved using rule 9 (statement -> empty .)
+    $end            reduce using rule 12 (statementSingle -> empty .)
+    RIGHTBRACE      reduce using rule 12 (statementSingle -> empty .)
+    ELSE            reduce using rule 9 (statement -> empty .)
+    ID              reduce using rule 9 (statement -> empty .)
+    IF              reduce using rule 9 (statement -> empty .)
 
-  ! ID              [ reduce using rule 12 (list -> ID .) ]
+  ! ELSE            [ reduce using rule 12 (statementSingle -> empty .) ]
+  ! ID              [ reduce using rule 12 (statementSingle -> empty .) ]
+  ! IF              [ reduce using rule 12 (statementSingle -> empty .) ]
 
-    list                           shift and go to state 32
 
 state 19
 
-    (20) conditions -> conditions AND conditions .
-    (20) conditions -> conditions . AND conditions
-    (21) conditions -> conditions . OR conditions
+    (6) statements -> statement .
 
-  ! shift/reduce conflict for AND resolved as shift
-  ! shift/reduce conflict for OR resolved as shift
-    RIGHTBRACKET    reduce using rule 20 (conditions -> conditions AND conditions .)
-    AND             shift and go to state 7
-    OR              shift and go to state 8
-
-  ! AND             [ reduce using rule 20 (conditions -> conditions AND conditions .) ]
-  ! OR              [ reduce using rule 20 (conditions -> conditions AND conditions .) ]
+    ELSE            reduce using rule 6 (statements -> statement .)
+    ID              reduce using rule 6 (statements -> statement .)
+    IF              reduce using rule 6 (statements -> statement .)
+    RIGHTBRACE      reduce using rule 6 (statements -> statement .)
+    $end            reduce using rule 6 (statements -> statement .)
 
 
 state 20
 
-    (21) conditions -> conditions OR conditions .
-    (20) conditions -> conditions . AND conditions
-    (21) conditions -> conditions . OR conditions
+    (13) list -> ID . list
+    (14) list -> ID .
+    (13) list -> . ID list
+    (14) list -> . ID
 
-  ! shift/reduce conflict for AND resolved as shift
-  ! shift/reduce conflict for OR resolved as shift
-    RIGHTBRACKET    reduce using rule 21 (conditions -> conditions OR conditions .)
-    AND             shift and go to state 7
-    OR              shift and go to state 8
+  ! shift/reduce conflict for ID resolved as shift
+    $end            reduce using rule 14 (list -> ID .)
+    ELSE            reduce using rule 14 (list -> ID .)
+    IF              reduce using rule 14 (list -> ID .)
+    RIGHTBRACE      reduce using rule 14 (list -> ID .)
+    ID              shift and go to state 20
 
-  ! AND             [ reduce using rule 21 (conditions -> conditions OR conditions .) ]
-  ! OR              [ reduce using rule 21 (conditions -> conditions OR conditions .) ]
+  ! ID              [ reduce using rule 14 (list -> ID .) ]
 
+    list                           shift and go to state 35
 
 state 21
 
-    (14) conditions -> ID EQUALS ID .
+    (22) conditions -> conditions AND conditions .
+    (22) conditions -> conditions . AND conditions
+    (23) conditions -> conditions . OR conditions
 
-    RIGHTBRACKET    reduce using rule 14 (conditions -> ID EQUALS ID .)
-    AND             reduce using rule 14 (conditions -> ID EQUALS ID .)
-    OR              reduce using rule 14 (conditions -> ID EQUALS ID .)
+  ! shift/reduce conflict for AND resolved as shift
+  ! shift/reduce conflict for OR resolved as shift
+    RIGHTBRACKET    reduce using rule 22 (conditions -> conditions AND conditions .)
+    AND             shift and go to state 7
+    OR              shift and go to state 8
+
+  ! AND             [ reduce using rule 22 (conditions -> conditions AND conditions .) ]
+  ! OR              [ reduce using rule 22 (conditions -> conditions AND conditions .) ]
 
 
 state 22
 
-    (15) conditions -> ID GREATER ID .
+    (23) conditions -> conditions OR conditions .
+    (22) conditions -> conditions . AND conditions
+    (23) conditions -> conditions . OR conditions
 
-    RIGHTBRACKET    reduce using rule 15 (conditions -> ID GREATER ID .)
-    AND             reduce using rule 15 (conditions -> ID GREATER ID .)
-    OR              reduce using rule 15 (conditions -> ID GREATER ID .)
+  ! shift/reduce conflict for AND resolved as shift
+  ! shift/reduce conflict for OR resolved as shift
+    RIGHTBRACKET    reduce using rule 23 (conditions -> conditions OR conditions .)
+    AND             shift and go to state 7
+    OR              shift and go to state 8
+
+  ! AND             [ reduce using rule 23 (conditions -> conditions OR conditions .) ]
+  ! OR              [ reduce using rule 23 (conditions -> conditions OR conditions .) ]
 
 
 state 23
 
-    (17) conditions -> ID GREATER EQUALS . ID
+    (16) conditions -> ID EQUALS ID .
 
-    ID              shift and go to state 33
+    RIGHTBRACKET    reduce using rule 16 (conditions -> ID EQUALS ID .)
+    AND             reduce using rule 16 (conditions -> ID EQUALS ID .)
+    OR              reduce using rule 16 (conditions -> ID EQUALS ID .)
 
 
 state 24
 
-    (16) conditions -> ID LESSER ID .
+    (17) conditions -> ID GREATER ID .
 
-    RIGHTBRACKET    reduce using rule 16 (conditions -> ID LESSER ID .)
-    AND             reduce using rule 16 (conditions -> ID LESSER ID .)
-    OR              reduce using rule 16 (conditions -> ID LESSER ID .)
+    RIGHTBRACKET    reduce using rule 17 (conditions -> ID GREATER ID .)
+    AND             reduce using rule 17 (conditions -> ID GREATER ID .)
+    OR              reduce using rule 17 (conditions -> ID GREATER ID .)
 
 
 state 25
 
-    (18) conditions -> ID LESSER EQUALS . ID
+    (19) conditions -> ID GREATER EQUALS . ID
 
-    ID              shift and go to state 34
+    ID              shift and go to state 36
 
 
 state 26
 
-    (19) conditions -> ID NOT EQUALS . ID
+    (18) conditions -> ID LESSER ID .
 
-    ID              shift and go to state 35
+    RIGHTBRACKET    reduce using rule 18 (conditions -> ID LESSER ID .)
+    AND             reduce using rule 18 (conditions -> ID LESSER ID .)
+    OR              reduce using rule 18 (conditions -> ID LESSER ID .)
 
 
 state 27
 
-    (1) ifstmt -> IF LEFTBRACKET conditions RIGHTBRACKET LEFTBRACE statements . RIGHTBRACE
-    (3) statements -> statements . statement
-    (5) statement -> . list
-    (6) statement -> . ifstmt
-    (7) statement -> . empty
-    (11) list -> . ID list
-    (12) list -> . ID
-    (1) ifstmt -> . IF LEFTBRACKET conditions RIGHTBRACKET LEFTBRACE statements RIGHTBRACE
-    (2) ifstmt -> . IF LEFTBRACKET conditions RIGHTBRACKET statementSingle
-    (13) empty -> .
+    (20) conditions -> ID LESSER EQUALS . ID
 
-  ! shift/reduce conflict for RIGHTBRACE resolved as shift
-  ! shift/reduce conflict for ID resolved as shift
-  ! shift/reduce conflict for IF resolved as shift
-    RIGHTBRACE      shift and go to state 36
-    ID              shift and go to state 18
-    IF              shift and go to state 2
+    ID              shift and go to state 37
 
-  ! RIGHTBRACE      [ reduce using rule 13 (empty -> .) ]
-  ! ID              [ reduce using rule 13 (empty -> .) ]
-  ! IF              [ reduce using rule 13 (empty -> .) ]
-
-    statement                      shift and go to state 37
-    list                           shift and go to state 29
-    ifstmt                         shift and go to state 30
-    empty                          shift and go to state 31
 
 state 28
 
-    (4) statements -> statement .
+    (21) conditions -> ID NOT EQUALS . ID
 
-    RIGHTBRACE      reduce using rule 4 (statements -> statement .)
-    ID              reduce using rule 4 (statements -> statement .)
-    IF              reduce using rule 4 (statements -> statement .)
+    ID              shift and go to state 38
 
 
 state 29
 
-    (5) statement -> list .
+    (1) ifstmt -> IF LEFTBRACKET conditions RIGHTBRACKET LEFTBRACE statements . RIGHTBRACE
+    (3) ifstmt -> IF LEFTBRACKET conditions RIGHTBRACKET LEFTBRACE statements . RIGHTBRACE ELSE LEFTBRACE statements RIGHTBRACE
+    (5) statements -> statements . statement
+    (7) statement -> . list
+    (8) statement -> . ifstmt
+    (9) statement -> . empty
+    (13) list -> . ID list
+    (14) list -> . ID
+    (1) ifstmt -> . IF LEFTBRACKET conditions RIGHTBRACKET LEFTBRACE statements RIGHTBRACE
+    (2) ifstmt -> . IF LEFTBRACKET conditions RIGHTBRACKET statementSingle
+    (3) ifstmt -> . IF LEFTBRACKET conditions RIGHTBRACKET LEFTBRACE statements RIGHTBRACE ELSE LEFTBRACE statements RIGHTBRACE
+    (4) ifstmt -> . IF LEFTBRACKET conditions RIGHTBRACKET statements ELSE statements
+    (15) empty -> .
 
-    RIGHTBRACE      reduce using rule 5 (statement -> list .)
-    ID              reduce using rule 5 (statement -> list .)
-    IF              reduce using rule 5 (statement -> list .)
+  ! shift/reduce conflict for RIGHTBRACE resolved as shift
+  ! shift/reduce conflict for ID resolved as shift
+  ! shift/reduce conflict for IF resolved as shift
+    RIGHTBRACE      shift and go to state 39
+    ID              shift and go to state 20
+    IF              shift and go to state 2
 
+  ! RIGHTBRACE      [ reduce using rule 15 (empty -> .) ]
+  ! ID              [ reduce using rule 15 (empty -> .) ]
+  ! IF              [ reduce using rule 15 (empty -> .) ]
+
+    statement                      shift and go to state 34
+    list                           shift and go to state 30
+    ifstmt                         shift and go to state 31
+    empty                          shift and go to state 32
 
 state 30
 
-    (6) statement -> ifstmt .
+    (7) statement -> list .
 
-    RIGHTBRACE      reduce using rule 6 (statement -> ifstmt .)
-    ID              reduce using rule 6 (statement -> ifstmt .)
-    IF              reduce using rule 6 (statement -> ifstmt .)
+    RIGHTBRACE      reduce using rule 7 (statement -> list .)
+    ID              reduce using rule 7 (statement -> list .)
+    IF              reduce using rule 7 (statement -> list .)
+    ELSE            reduce using rule 7 (statement -> list .)
+    $end            reduce using rule 7 (statement -> list .)
 
 
 state 31
 
-    (7) statement -> empty .
+    (8) statement -> ifstmt .
 
-    RIGHTBRACE      reduce using rule 7 (statement -> empty .)
-    ID              reduce using rule 7 (statement -> empty .)
-    IF              reduce using rule 7 (statement -> empty .)
+    RIGHTBRACE      reduce using rule 8 (statement -> ifstmt .)
+    ID              reduce using rule 8 (statement -> ifstmt .)
+    IF              reduce using rule 8 (statement -> ifstmt .)
+    ELSE            reduce using rule 8 (statement -> ifstmt .)
+    $end            reduce using rule 8 (statement -> ifstmt .)
 
 
 state 32
 
-    (11) list -> ID list .
+    (9) statement -> empty .
 
-    $end            reduce using rule 11 (list -> ID list .)
-    RIGHTBRACE      reduce using rule 11 (list -> ID list .)
-    ID              reduce using rule 11 (list -> ID list .)
-    IF              reduce using rule 11 (list -> ID list .)
+    RIGHTBRACE      reduce using rule 9 (statement -> empty .)
+    ID              reduce using rule 9 (statement -> empty .)
+    IF              reduce using rule 9 (statement -> empty .)
+    ELSE            reduce using rule 9 (statement -> empty .)
+    $end            reduce using rule 9 (statement -> empty .)
 
 
 state 33
 
-    (17) conditions -> ID GREATER EQUALS ID .
+    (4) ifstmt -> IF LEFTBRACKET conditions RIGHTBRACKET statements ELSE . statements
+    (5) statements -> . statements statement
+    (6) statements -> . statement
+    (7) statement -> . list
+    (8) statement -> . ifstmt
+    (9) statement -> . empty
+    (13) list -> . ID list
+    (14) list -> . ID
+    (1) ifstmt -> . IF LEFTBRACKET conditions RIGHTBRACKET LEFTBRACE statements RIGHTBRACE
+    (2) ifstmt -> . IF LEFTBRACKET conditions RIGHTBRACKET statementSingle
+    (3) ifstmt -> . IF LEFTBRACKET conditions RIGHTBRACKET LEFTBRACE statements RIGHTBRACE ELSE LEFTBRACE statements RIGHTBRACE
+    (4) ifstmt -> . IF LEFTBRACKET conditions RIGHTBRACKET statements ELSE statements
+    (15) empty -> .
 
-    RIGHTBRACKET    reduce using rule 17 (conditions -> ID GREATER EQUALS ID .)
-    AND             reduce using rule 17 (conditions -> ID GREATER EQUALS ID .)
-    OR              reduce using rule 17 (conditions -> ID GREATER EQUALS ID .)
+  ! shift/reduce conflict for ID resolved as shift
+  ! shift/reduce conflict for IF resolved as shift
+    ID              shift and go to state 20
+    IF              shift and go to state 2
+    $end            reduce using rule 15 (empty -> .)
+    ELSE            reduce using rule 15 (empty -> .)
+    RIGHTBRACE      reduce using rule 15 (empty -> .)
 
+  ! ID              [ reduce using rule 15 (empty -> .) ]
+  ! IF              [ reduce using rule 15 (empty -> .) ]
+
+    statements                     shift and go to state 40
+    statement                      shift and go to state 19
+    list                           shift and go to state 30
+    ifstmt                         shift and go to state 31
+    empty                          shift and go to state 32
 
 state 34
 
-    (18) conditions -> ID LESSER EQUALS ID .
+    (5) statements -> statements statement .
 
-    RIGHTBRACKET    reduce using rule 18 (conditions -> ID LESSER EQUALS ID .)
-    AND             reduce using rule 18 (conditions -> ID LESSER EQUALS ID .)
-    OR              reduce using rule 18 (conditions -> ID LESSER EQUALS ID .)
+    ELSE            reduce using rule 5 (statements -> statements statement .)
+    ID              reduce using rule 5 (statements -> statements statement .)
+    IF              reduce using rule 5 (statements -> statements statement .)
+    RIGHTBRACE      reduce using rule 5 (statements -> statements statement .)
+    $end            reduce using rule 5 (statements -> statements statement .)
 
 
 state 35
 
-    (19) conditions -> ID NOT EQUALS ID .
+    (13) list -> ID list .
 
-    RIGHTBRACKET    reduce using rule 19 (conditions -> ID NOT EQUALS ID .)
-    AND             reduce using rule 19 (conditions -> ID NOT EQUALS ID .)
-    OR              reduce using rule 19 (conditions -> ID NOT EQUALS ID .)
+    $end            reduce using rule 13 (list -> ID list .)
+    ELSE            reduce using rule 13 (list -> ID list .)
+    ID              reduce using rule 13 (list -> ID list .)
+    IF              reduce using rule 13 (list -> ID list .)
+    RIGHTBRACE      reduce using rule 13 (list -> ID list .)
 
 
 state 36
 
-    (1) ifstmt -> IF LEFTBRACKET conditions RIGHTBRACKET LEFTBRACE statements RIGHTBRACE .
+    (19) conditions -> ID GREATER EQUALS ID .
 
-    $end            reduce using rule 1 (ifstmt -> IF LEFTBRACKET conditions RIGHTBRACKET LEFTBRACE statements RIGHTBRACE .)
-    RIGHTBRACE      reduce using rule 1 (ifstmt -> IF LEFTBRACKET conditions RIGHTBRACKET LEFTBRACE statements RIGHTBRACE .)
-    ID              reduce using rule 1 (ifstmt -> IF LEFTBRACKET conditions RIGHTBRACKET LEFTBRACE statements RIGHTBRACE .)
-    IF              reduce using rule 1 (ifstmt -> IF LEFTBRACKET conditions RIGHTBRACKET LEFTBRACE statements RIGHTBRACE .)
+    RIGHTBRACKET    reduce using rule 19 (conditions -> ID GREATER EQUALS ID .)
+    AND             reduce using rule 19 (conditions -> ID GREATER EQUALS ID .)
+    OR              reduce using rule 19 (conditions -> ID GREATER EQUALS ID .)
 
 
 state 37
 
-    (3) statements -> statements statement .
+    (20) conditions -> ID LESSER EQUALS ID .
 
-    RIGHTBRACE      reduce using rule 3 (statements -> statements statement .)
-    ID              reduce using rule 3 (statements -> statements statement .)
-    IF              reduce using rule 3 (statements -> statements statement .)
+    RIGHTBRACKET    reduce using rule 20 (conditions -> ID LESSER EQUALS ID .)
+    AND             reduce using rule 20 (conditions -> ID LESSER EQUALS ID .)
+    OR              reduce using rule 20 (conditions -> ID LESSER EQUALS ID .)
+
+
+state 38
+
+    (21) conditions -> ID NOT EQUALS ID .
+
+    RIGHTBRACKET    reduce using rule 21 (conditions -> ID NOT EQUALS ID .)
+    AND             reduce using rule 21 (conditions -> ID NOT EQUALS ID .)
+    OR              reduce using rule 21 (conditions -> ID NOT EQUALS ID .)
+
+
+state 39
+
+    (1) ifstmt -> IF LEFTBRACKET conditions RIGHTBRACKET LEFTBRACE statements RIGHTBRACE .
+    (3) ifstmt -> IF LEFTBRACKET conditions RIGHTBRACKET LEFTBRACE statements RIGHTBRACE . ELSE LEFTBRACE statements RIGHTBRACE
+
+  ! shift/reduce conflict for ELSE resolved as shift
+    $end            reduce using rule 1 (ifstmt -> IF LEFTBRACKET conditions RIGHTBRACKET LEFTBRACE statements RIGHTBRACE .)
+    ID              reduce using rule 1 (ifstmt -> IF LEFTBRACKET conditions RIGHTBRACKET LEFTBRACE statements RIGHTBRACE .)
+    IF              reduce using rule 1 (ifstmt -> IF LEFTBRACKET conditions RIGHTBRACKET LEFTBRACE statements RIGHTBRACE .)
+    RIGHTBRACE      reduce using rule 1 (ifstmt -> IF LEFTBRACKET conditions RIGHTBRACKET LEFTBRACE statements RIGHTBRACE .)
+    ELSE            shift and go to state 41
+
+  ! ELSE            [ reduce using rule 1 (ifstmt -> IF LEFTBRACKET conditions RIGHTBRACKET LEFTBRACE statements RIGHTBRACE .) ]
+
+
+state 40
+
+    (4) ifstmt -> IF LEFTBRACKET conditions RIGHTBRACKET statements ELSE statements .
+    (5) statements -> statements . statement
+    (7) statement -> . list
+    (8) statement -> . ifstmt
+    (9) statement -> . empty
+    (13) list -> . ID list
+    (14) list -> . ID
+    (1) ifstmt -> . IF LEFTBRACKET conditions RIGHTBRACKET LEFTBRACE statements RIGHTBRACE
+    (2) ifstmt -> . IF LEFTBRACKET conditions RIGHTBRACKET statementSingle
+    (3) ifstmt -> . IF LEFTBRACKET conditions RIGHTBRACKET LEFTBRACE statements RIGHTBRACE ELSE LEFTBRACE statements RIGHTBRACE
+    (4) ifstmt -> . IF LEFTBRACKET conditions RIGHTBRACKET statements ELSE statements
+    (15) empty -> .
+
+  ! shift/reduce conflict for ID resolved as shift
+  ! shift/reduce conflict for IF resolved as shift
+  ! reduce/reduce conflict for $end resolved using rule 4 (ifstmt -> IF LEFTBRACKET conditions RIGHTBRACKET statements ELSE statements .)
+  ! reduce/reduce conflict for ELSE resolved using rule 4 (ifstmt -> IF LEFTBRACKET conditions RIGHTBRACKET statements ELSE statements .)
+  ! shift/reduce conflict for ID resolved as shift
+  ! shift/reduce conflict for IF resolved as shift
+  ! reduce/reduce conflict for RIGHTBRACE resolved using rule 4 (ifstmt -> IF LEFTBRACKET conditions RIGHTBRACKET statements ELSE statements .)
+    $end            reduce using rule 4 (ifstmt -> IF LEFTBRACKET conditions RIGHTBRACKET statements ELSE statements .)
+    ELSE            reduce using rule 4 (ifstmt -> IF LEFTBRACKET conditions RIGHTBRACKET statements ELSE statements .)
+    RIGHTBRACE      reduce using rule 4 (ifstmt -> IF LEFTBRACKET conditions RIGHTBRACKET statements ELSE statements .)
+    ID              shift and go to state 20
+    IF              shift and go to state 2
+
+  ! ID              [ reduce using rule 4 (ifstmt -> IF LEFTBRACKET conditions RIGHTBRACKET statements ELSE statements .) ]
+  ! IF              [ reduce using rule 4 (ifstmt -> IF LEFTBRACKET conditions RIGHTBRACKET statements ELSE statements .) ]
+  ! $end            [ reduce using rule 15 (empty -> .) ]
+  ! ELSE            [ reduce using rule 15 (empty -> .) ]
+  ! ID              [ reduce using rule 15 (empty -> .) ]
+  ! IF              [ reduce using rule 15 (empty -> .) ]
+  ! RIGHTBRACE      [ reduce using rule 15 (empty -> .) ]
+
+    statement                      shift and go to state 34
+    list                           shift and go to state 30
+    ifstmt                         shift and go to state 31
+    empty                          shift and go to state 32
+
+state 41
+
+    (3) ifstmt -> IF LEFTBRACKET conditions RIGHTBRACKET LEFTBRACE statements RIGHTBRACE ELSE . LEFTBRACE statements RIGHTBRACE
+
+    LEFTBRACE       shift and go to state 42
+
+
+state 42
+
+    (3) ifstmt -> IF LEFTBRACKET conditions RIGHTBRACKET LEFTBRACE statements RIGHTBRACE ELSE LEFTBRACE . statements RIGHTBRACE
+    (5) statements -> . statements statement
+    (6) statements -> . statement
+    (7) statement -> . list
+    (8) statement -> . ifstmt
+    (9) statement -> . empty
+    (13) list -> . ID list
+    (14) list -> . ID
+    (1) ifstmt -> . IF LEFTBRACKET conditions RIGHTBRACKET LEFTBRACE statements RIGHTBRACE
+    (2) ifstmt -> . IF LEFTBRACKET conditions RIGHTBRACKET statementSingle
+    (3) ifstmt -> . IF LEFTBRACKET conditions RIGHTBRACKET LEFTBRACE statements RIGHTBRACE ELSE LEFTBRACE statements RIGHTBRACE
+    (4) ifstmt -> . IF LEFTBRACKET conditions RIGHTBRACKET statements ELSE statements
+    (15) empty -> .
+
+  ! shift/reduce conflict for ID resolved as shift
+  ! shift/reduce conflict for IF resolved as shift
+    ID              shift and go to state 20
+    IF              shift and go to state 2
+    RIGHTBRACE      reduce using rule 15 (empty -> .)
+
+  ! ID              [ reduce using rule 15 (empty -> .) ]
+  ! IF              [ reduce using rule 15 (empty -> .) ]
+
+    statements                     shift and go to state 43
+    statement                      shift and go to state 19
+    list                           shift and go to state 30
+    ifstmt                         shift and go to state 31
+    empty                          shift and go to state 32
+
+state 43
+
+    (3) ifstmt -> IF LEFTBRACKET conditions RIGHTBRACKET LEFTBRACE statements RIGHTBRACE ELSE LEFTBRACE statements . RIGHTBRACE
+    (5) statements -> statements . statement
+    (7) statement -> . list
+    (8) statement -> . ifstmt
+    (9) statement -> . empty
+    (13) list -> . ID list
+    (14) list -> . ID
+    (1) ifstmt -> . IF LEFTBRACKET conditions RIGHTBRACKET LEFTBRACE statements RIGHTBRACE
+    (2) ifstmt -> . IF LEFTBRACKET conditions RIGHTBRACKET statementSingle
+    (3) ifstmt -> . IF LEFTBRACKET conditions RIGHTBRACKET LEFTBRACE statements RIGHTBRACE ELSE LEFTBRACE statements RIGHTBRACE
+    (4) ifstmt -> . IF LEFTBRACKET conditions RIGHTBRACKET statements ELSE statements
+    (15) empty -> .
+
+  ! shift/reduce conflict for RIGHTBRACE resolved as shift
+  ! shift/reduce conflict for ID resolved as shift
+  ! shift/reduce conflict for IF resolved as shift
+    RIGHTBRACE      shift and go to state 44
+    ID              shift and go to state 20
+    IF              shift and go to state 2
+
+  ! RIGHTBRACE      [ reduce using rule 15 (empty -> .) ]
+  ! ID              [ reduce using rule 15 (empty -> .) ]
+  ! IF              [ reduce using rule 15 (empty -> .) ]
+
+    statement                      shift and go to state 34
+    list                           shift and go to state 30
+    ifstmt                         shift and go to state 31
+    empty                          shift and go to state 32
+
+state 44
+
+    (3) ifstmt -> IF LEFTBRACKET conditions RIGHTBRACKET LEFTBRACE statements RIGHTBRACE ELSE LEFTBRACE statements RIGHTBRACE .
+
+    $end            reduce using rule 3 (ifstmt -> IF LEFTBRACKET conditions RIGHTBRACKET LEFTBRACE statements RIGHTBRACE ELSE LEFTBRACE statements RIGHTBRACE .)
+    ELSE            reduce using rule 3 (ifstmt -> IF LEFTBRACKET conditions RIGHTBRACKET LEFTBRACE statements RIGHTBRACE ELSE LEFTBRACE statements RIGHTBRACE .)
+    ID              reduce using rule 3 (ifstmt -> IF LEFTBRACKET conditions RIGHTBRACKET LEFTBRACE statements RIGHTBRACE ELSE LEFTBRACE statements RIGHTBRACE .)
+    IF              reduce using rule 3 (ifstmt -> IF LEFTBRACKET conditions RIGHTBRACKET LEFTBRACE statements RIGHTBRACE ELSE LEFTBRACE statements RIGHTBRACE .)
+    RIGHTBRACE      reduce using rule 3 (ifstmt -> IF LEFTBRACKET conditions RIGHTBRACKET LEFTBRACE statements RIGHTBRACE ELSE LEFTBRACE statements RIGHTBRACE .)
 
 WARNING: 
 WARNING: Conflicts:
@@ -520,11 +774,34 @@ WARNING: shift/reduce conflict for ID in state 6 resolved as shift
 WARNING: shift/reduce conflict for IF in state 6 resolved as shift
 WARNING: shift/reduce conflict for ID in state 13 resolved as shift
 WARNING: shift/reduce conflict for IF in state 13 resolved as shift
-WARNING: shift/reduce conflict for ID in state 18 resolved as shift
-WARNING: shift/reduce conflict for AND in state 19 resolved as shift
-WARNING: shift/reduce conflict for OR in state 19 resolved as shift
-WARNING: shift/reduce conflict for AND in state 20 resolved as shift
-WARNING: shift/reduce conflict for OR in state 20 resolved as shift
-WARNING: shift/reduce conflict for RIGHTBRACE in state 27 resolved as shift
-WARNING: shift/reduce conflict for ID in state 27 resolved as shift
-WARNING: shift/reduce conflict for IF in state 27 resolved as shift
+WARNING: shift/reduce conflict for ELSE in state 14 resolved as shift
+WARNING: shift/reduce conflict for ID in state 14 resolved as shift
+WARNING: shift/reduce conflict for IF in state 14 resolved as shift
+WARNING: shift/reduce conflict for ID in state 20 resolved as shift
+WARNING: shift/reduce conflict for AND in state 21 resolved as shift
+WARNING: shift/reduce conflict for OR in state 21 resolved as shift
+WARNING: shift/reduce conflict for AND in state 22 resolved as shift
+WARNING: shift/reduce conflict for OR in state 22 resolved as shift
+WARNING: shift/reduce conflict for RIGHTBRACE in state 29 resolved as shift
+WARNING: shift/reduce conflict for ID in state 29 resolved as shift
+WARNING: shift/reduce conflict for IF in state 29 resolved as shift
+WARNING: shift/reduce conflict for ID in state 33 resolved as shift
+WARNING: shift/reduce conflict for IF in state 33 resolved as shift
+WARNING: shift/reduce conflict for ELSE in state 39 resolved as shift
+WARNING: shift/reduce conflict for ID in state 40 resolved as shift
+WARNING: shift/reduce conflict for IF in state 40 resolved as shift
+WARNING: shift/reduce conflict for ID in state 40 resolved as shift
+WARNING: shift/reduce conflict for IF in state 40 resolved as shift
+WARNING: shift/reduce conflict for ID in state 42 resolved as shift
+WARNING: shift/reduce conflict for IF in state 42 resolved as shift
+WARNING: shift/reduce conflict for RIGHTBRACE in state 43 resolved as shift
+WARNING: shift/reduce conflict for ID in state 43 resolved as shift
+WARNING: shift/reduce conflict for IF in state 43 resolved as shift
+WARNING: reduce/reduce conflict in state 16 resolved using rule (statement -> ifstmt)
+WARNING: rejected rule (statementSingle -> ifstmt) in state 16
+WARNING: reduce/reduce conflict in state 17 resolved using rule (statement -> list)
+WARNING: rejected rule (statementSingle -> list) in state 17
+WARNING: reduce/reduce conflict in state 18 resolved using rule (statement -> empty)
+WARNING: rejected rule (statementSingle -> empty) in state 18
+WARNING: reduce/reduce conflict in state 40 resolved using rule (ifstmt -> IF LEFTBRACKET conditions RIGHTBRACKET statements ELSE statements)
+WARNING: rejected rule (empty -> <empty>) in state 40

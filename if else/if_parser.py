@@ -1,19 +1,29 @@
 import ply.yacc as yacc
 from if_lexer import tokens
-from if_lexer import data
+
 flag=0
-
-
 def p_ifstmt(p):
+    
     '''
     ifstmt :  IF LEFTBRACKET conditions RIGHTBRACKET LEFTBRACE statements RIGHTBRACE
            |  IF LEFTBRACKET conditions RIGHTBRACKET statementSingle
+           |  IF LEFTBRACKET conditions RIGHTBRACKET LEFTBRACE statements RIGHTBRACE ELSE LEFTBRACE statements RIGHTBRACE
+           |  IF LEFTBRACKET conditions RIGHTBRACKET statements ELSE statements
     '''
+    #this works for 
+    #case 1: if(a>10){a=11}
+    #case 2: if(a>10) a=11
+    #case 3: if(a>10){a=11}else{a=10}
+    #case 4: if(a>10)a=11 else a=10
+    
     if len(p) == 6:
         p[0] = (p[1],p[3],p[5])
+    elif len(p)==11:
+        p[0] = (p[1],p[3],p[6],p[8],p[10])
+    elif len(p)==8 and p[6]=='LEFTBRACE':
+        p[0]=(p[1],p[3],p[6])
     else:
-        p[0] = (p[1],p[3],p[6])
-
+        p[0]=(p[1],p[3],p[5],p[6],p[7])
 
 def p_statements(p):
     '''

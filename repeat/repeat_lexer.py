@@ -1,5 +1,4 @@
 import ply.lex as lex
-
 tokens = ('REPEAT',
         'LBRACKET','RBRACKET',
         'LESSER',
@@ -31,7 +30,7 @@ def t_BREAK(t):
     return t
 
 def t_ID(t):
-    r'\b([a-zA-Z_][a-zA-Z_0-9]*)\b |\b(\d+)\b'
+    r'\b([a-zA-Z_=][a-zA-Z_0-9]*)\b |\b(\d+)\b'
     return t
 
 t_LESSER = r'<'
@@ -55,7 +54,3 @@ while(1):
     if not tok:
         break
     print(tok)
-
-
-
-
