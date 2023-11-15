@@ -1,0 +1,52 @@
+Created by PLY version 3.11 (http://www.dabeaz.com/ply)
+
+Grammar
+
+Rule 0     S' -> repeatstmt
+Rule 1     repeatstmt -> REPEAT LFLOWER statements IF LBRACKET condition RBRACKET LFLOWER BREAK RFLOWER RFLOWER
+Rule 2     statements -> statements statement
+Rule 3     statements -> statement
+Rule 4     statement -> list
+Rule 5     statement -> nextstmt
+Rule 6     statement -> empty
+Rule 7     list -> ID list
+Rule 8     list -> ID
+Rule 9     empty -> <empty>
+Rule 10    condition -> ID EQUALS ID
+Rule 11    condition -> ID GREATER ID
+Rule 12    condition -> ID LESSER ID
+Rule 13    condition -> ID GREATER EQUALS ID
+Rule 14    condition -> ID LESSER EQUALS ID
+Rule 15    condition -> ID NOT EQUALS ID
+Rule 16    condition -> condition AND condition
+Rule 17    condition -> condition OR condition
+Rule 18    condition -> ID
+
+Terminals, with rules where they appear
+
+AND                  : 16
+BREAK                : 1
+EQUALS               : 10 13 14 15
+GREATER              : 11 13
+ID                   : 7 8 10 10 11 11 12 12 13 13 14 14 15 15 18
+IF                   : 1
+LBRACKET             : 1
+LESSER               : 12 14
+LFLOWER              : 1 1
+NOT                  : 15
+OR                   : 17
+RBRACKET             : 1
+REPEAT               : 1
+RFLOWER              : 1 1
+error                : 
+
+Nonterminals, with rules where they appear
+
+condition            : 1 16 16 17 17
+empty                : 6
+list                 : 4 7
+nextstmt             : 5
+repeatstmt           : 0
+statement            : 2 3
+statements           : 1 2
+
