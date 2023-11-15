@@ -6,9 +6,9 @@ _tabversion = '3.10'
 
 _lr_method = 'LALR'
 
-_lr_signature = 'AND BREAK EQUALS GREATER ID IF LBRACKET LESSER LFLOWER NOT OR RBRACKET REPEAT RFLOWER\n    repeatstmt :  REPEAT LFLOWER statements IF LBRACKET condition RBRACKET LFLOWER BREAK RFLOWER RFLOWER\n    \n    statements : statements statement\n               | statement\n    \n    statement : list \n             | repeatstmt\n             | empty\n    \n    list : ID list \n         | ID\n    \n    empty :\n    \n    condition : ID EQUALS ID \n                | ID GREATER ID \n                | ID LESSER ID \n                | ID GREATER EQUALS ID \n                | ID LESSER EQUALS ID \n                | ID NOT EQUALS ID\n                | condition AND condition\n                | condition OR condition\n                | ID\n    '
+_lr_signature = 'AND ARROW BREAK EQUALS GREATER ID IF LBRACKET LESSER LFLOWER NOT OR RBRACKET REPEAT RFLOWER\n    repeatstmt :  REPEAT LFLOWER statements IF LBRACKET condition RBRACKET LFLOWER BREAK RFLOWER RFLOWER\n    \n    statements : statements statement\n               | statement\n    \n    statement : list \n             | repeatstmt\n             | empty\n    \n    list : ID list \n         | ID\n         | ID ARROW ID\n    \n    empty :\n    \n    condition : ID EQUALS ID \n                | ID GREATER ID \n                | ID LESSER ID \n                | ID GREATER EQUALS ID \n                | ID LESSER EQUALS ID \n                | ID NOT EQUALS ID\n                | condition AND condition\n                | condition OR condition\n                | ID\n    '
     
-_lr_action_items = {'REPEAT':([0,3,4,5,6,7,8,9,11,12,37,],[2,2,2,-3,-4,-5,-6,-8,-2,-7,-1,]),'$end':([1,37,],[0,-1,]),'LFLOWER':([2,16,],[3,23,]),'ID':([3,4,5,6,7,8,9,11,12,13,17,18,19,20,21,28,30,31,37,],[9,9,-3,-4,-5,-6,9,-2,-7,15,15,15,26,27,29,33,34,35,-1,]),'IF':([3,4,5,6,7,8,9,11,12,37,],[-9,10,-3,-4,-5,-6,-8,-2,-7,-1,]),'LBRACKET':([10,],[13,]),'RBRACKET':([14,15,24,25,26,27,29,33,34,35,],[16,-18,-16,-17,-10,-11,-12,-13,-14,-15,]),'AND':([14,15,24,25,26,27,29,33,34,35,],[17,-18,17,17,-10,-11,-12,-13,-14,-15,]),'OR':([14,15,24,25,26,27,29,33,34,35,],[18,-18,18,18,-10,-11,-12,-13,-14,-15,]),'EQUALS':([15,20,21,22,],[19,28,30,31,]),'GREATER':([15,],[20,]),'LESSER':([15,],[21,]),'NOT':([15,],[22,]),'BREAK':([23,],[32,]),'RFLOWER':([32,36,],[36,37,]),}
+_lr_action_items = {'REPEAT':([0,3,4,5,6,7,8,9,11,12,15,39,],[2,2,2,-3,-4,-5,-6,-8,-2,-7,-9,-1,]),'$end':([1,39,],[0,-1,]),'LFLOWER':([2,18,],[3,25,]),'ID':([3,4,5,6,7,8,9,11,12,13,14,15,19,20,21,22,23,30,32,33,39,],[9,9,-3,-4,-5,-6,9,-2,-7,15,17,-9,17,17,28,29,31,35,36,37,-1,]),'IF':([3,4,5,6,7,8,9,11,12,15,39,],[-10,10,-3,-4,-5,-6,-8,-2,-7,-9,-1,]),'ARROW':([9,],[13,]),'LBRACKET':([10,],[14,]),'RBRACKET':([16,17,26,27,28,29,31,35,36,37,],[18,-19,-17,-18,-11,-12,-13,-14,-15,-16,]),'AND':([16,17,26,27,28,29,31,35,36,37,],[19,-19,19,19,-11,-12,-13,-14,-15,-16,]),'OR':([16,17,26,27,28,29,31,35,36,37,],[20,-19,20,20,-11,-12,-13,-14,-15,-16,]),'EQUALS':([17,22,23,24,],[21,30,32,33,]),'GREATER':([17,],[22,]),'LESSER':([17,],[23,]),'NOT':([17,],[24,]),'BREAK':([25,],[34,]),'RFLOWER':([34,38,],[38,39,]),}
 
 _lr_action = {}
 for _k, _v in _lr_action_items.items():
@@ -17,7 +17,7 @@ for _k, _v in _lr_action_items.items():
       _lr_action[_x][_k] = _y
 del _lr_action_items
 
-_lr_goto_items = {'repeatstmt':([0,3,4,],[1,7,7,]),'statements':([3,],[4,]),'statement':([3,4,],[5,11,]),'list':([3,4,9,],[6,6,12,]),'empty':([3,4,],[8,8,]),'condition':([13,17,18,],[14,24,25,]),}
+_lr_goto_items = {'repeatstmt':([0,3,4,],[1,7,7,]),'statements':([3,],[4,]),'statement':([3,4,],[5,11,]),'list':([3,4,9,],[6,6,12,]),'empty':([3,4,],[8,8,]),'condition':([14,19,20,],[16,26,27,]),}
 
 _lr_goto = {}
 for _k, _v in _lr_goto_items.items():
@@ -27,22 +27,23 @@ for _k, _v in _lr_goto_items.items():
 del _lr_goto_items
 _lr_productions = [
   ("S' -> repeatstmt","S'",1,None,None,None),
-  ('repeatstmt -> REPEAT LFLOWER statements IF LBRACKET condition RBRACKET LFLOWER BREAK RFLOWER RFLOWER','repeatstmt',11,'p_repeatstmt','repeat_parser.py',9),
+  ('repeatstmt -> REPEAT LFLOWER statements IF LBRACKET condition RBRACKET LFLOWER BREAK RFLOWER RFLOWER','repeatstmt',11,'p_repeatstmt','repeat_parser.py',8),
   ('statements -> statements statement','statements',2,'p_statements','repeat_parser.py',19),
   ('statements -> statement','statements',1,'p_statements','repeat_parser.py',20),
-  ('statement -> list','statement',1,'p_statement','repeat_parser.py',30),
-  ('statement -> repeatstmt','statement',1,'p_statement','repeat_parser.py',31),
-  ('statement -> empty','statement',1,'p_statement','repeat_parser.py',32),
-  ('list -> ID list','list',2,'p_list','repeat_parser.py',39),
-  ('list -> ID','list',1,'p_list','repeat_parser.py',40),
-  ('empty -> <empty>','empty',0,'p_empty','repeat_parser.py',49),
-  ('condition -> ID EQUALS ID','condition',3,'p_condition','repeat_parser.py',56),
-  ('condition -> ID GREATER ID','condition',3,'p_condition','repeat_parser.py',57),
-  ('condition -> ID LESSER ID','condition',3,'p_condition','repeat_parser.py',58),
-  ('condition -> ID GREATER EQUALS ID','condition',4,'p_condition','repeat_parser.py',59),
-  ('condition -> ID LESSER EQUALS ID','condition',4,'p_condition','repeat_parser.py',60),
-  ('condition -> ID NOT EQUALS ID','condition',4,'p_condition','repeat_parser.py',61),
-  ('condition -> condition AND condition','condition',3,'p_condition','repeat_parser.py',62),
-  ('condition -> condition OR condition','condition',3,'p_condition','repeat_parser.py',63),
-  ('condition -> ID','condition',1,'p_condition','repeat_parser.py',64),
+  ('statement -> list','statement',1,'p_statement','repeat_parser.py',29),
+  ('statement -> repeatstmt','statement',1,'p_statement','repeat_parser.py',30),
+  ('statement -> empty','statement',1,'p_statement','repeat_parser.py',31),
+  ('list -> ID list','list',2,'p_list','repeat_parser.py',37),
+  ('list -> ID','list',1,'p_list','repeat_parser.py',38),
+  ('list -> ID ARROW ID','list',3,'p_list','repeat_parser.py',39),
+  ('empty -> <empty>','empty',0,'p_empty','repeat_parser.py',48),
+  ('condition -> ID EQUALS ID','condition',3,'p_condition','repeat_parser.py',54),
+  ('condition -> ID GREATER ID','condition',3,'p_condition','repeat_parser.py',55),
+  ('condition -> ID LESSER ID','condition',3,'p_condition','repeat_parser.py',56),
+  ('condition -> ID GREATER EQUALS ID','condition',4,'p_condition','repeat_parser.py',57),
+  ('condition -> ID LESSER EQUALS ID','condition',4,'p_condition','repeat_parser.py',58),
+  ('condition -> ID NOT EQUALS ID','condition',4,'p_condition','repeat_parser.py',59),
+  ('condition -> condition AND condition','condition',3,'p_condition','repeat_parser.py',60),
+  ('condition -> condition OR condition','condition',3,'p_condition','repeat_parser.py',61),
+  ('condition -> ID','condition',1,'p_condition','repeat_parser.py',62),
 ]

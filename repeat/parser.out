@@ -7,34 +7,36 @@ Rule 1     repeatstmt -> REPEAT LFLOWER statements IF LBRACKET condition RBRACKE
 Rule 2     statements -> statements statement
 Rule 3     statements -> statement
 Rule 4     statement -> list
-Rule 5     statement -> nextstmt
+Rule 5     statement -> repeatstmt
 Rule 6     statement -> empty
 Rule 7     list -> ID list
 Rule 8     list -> ID
-Rule 9     empty -> <empty>
-Rule 10    condition -> ID EQUALS ID
-Rule 11    condition -> ID GREATER ID
-Rule 12    condition -> ID LESSER ID
-Rule 13    condition -> ID GREATER EQUALS ID
-Rule 14    condition -> ID LESSER EQUALS ID
-Rule 15    condition -> ID NOT EQUALS ID
-Rule 16    condition -> condition AND condition
-Rule 17    condition -> condition OR condition
-Rule 18    condition -> ID
+Rule 9     list -> ID ARROW ID
+Rule 10    empty -> <empty>
+Rule 11    condition -> ID EQUALS ID
+Rule 12    condition -> ID GREATER ID
+Rule 13    condition -> ID LESSER ID
+Rule 14    condition -> ID GREATER EQUALS ID
+Rule 15    condition -> ID LESSER EQUALS ID
+Rule 16    condition -> ID NOT EQUALS ID
+Rule 17    condition -> condition AND condition
+Rule 18    condition -> condition OR condition
+Rule 19    condition -> ID
 
 Terminals, with rules where they appear
 
-AND                  : 16
+AND                  : 17
+ARROW                : 9
 BREAK                : 1
-EQUALS               : 10 13 14 15
-GREATER              : 11 13
-ID                   : 7 8 10 10 11 11 12 12 13 13 14 14 15 15 18
+EQUALS               : 11 14 15 16
+GREATER              : 12 14
+ID                   : 7 8 9 9 11 11 12 12 13 13 14 14 15 15 16 16 19
 IF                   : 1
 LBRACKET             : 1
-LESSER               : 12 14
+LESSER               : 13 15
 LFLOWER              : 1 1
-NOT                  : 15
-OR                   : 17
+NOT                  : 16
+OR                   : 18
 RBRACKET             : 1
 REPEAT               : 1
 RFLOWER              : 1 1
@@ -42,11 +44,458 @@ error                :
 
 Nonterminals, with rules where they appear
 
-condition            : 1 16 16 17 17
+condition            : 1 17 17 18 18
 empty                : 6
 list                 : 4 7
-nextstmt             : 5
-repeatstmt           : 0
+repeatstmt           : 5 0
 statement            : 2 3
 statements           : 1 2
 
+Parsing method: LALR
+
+state 0
+
+    (0) S' -> . repeatstmt
+    (1) repeatstmt -> . REPEAT LFLOWER statements IF LBRACKET condition RBRACKET LFLOWER BREAK RFLOWER RFLOWER
+
+    REPEAT          shift and go to state 2
+
+    repeatstmt                     shift and go to state 1
+
+state 1
+
+    (0) S' -> repeatstmt .
+
+
+
+state 2
+
+    (1) repeatstmt -> REPEAT . LFLOWER statements IF LBRACKET condition RBRACKET LFLOWER BREAK RFLOWER RFLOWER
+
+    LFLOWER         shift and go to state 3
+
+
+state 3
+
+    (1) repeatstmt -> REPEAT LFLOWER . statements IF LBRACKET condition RBRACKET LFLOWER BREAK RFLOWER RFLOWER
+    (2) statements -> . statements statement
+    (3) statements -> . statement
+    (4) statement -> . list
+    (5) statement -> . repeatstmt
+    (6) statement -> . empty
+    (7) list -> . ID list
+    (8) list -> . ID
+    (9) list -> . ID ARROW ID
+    (1) repeatstmt -> . REPEAT LFLOWER statements IF LBRACKET condition RBRACKET LFLOWER BREAK RFLOWER RFLOWER
+    (10) empty -> .
+
+  ! shift/reduce conflict for ID resolved as shift
+  ! shift/reduce conflict for REPEAT resolved as shift
+    ID              shift and go to state 9
+    REPEAT          shift and go to state 2
+    IF              reduce using rule 10 (empty -> .)
+
+  ! ID              [ reduce using rule 10 (empty -> .) ]
+  ! REPEAT          [ reduce using rule 10 (empty -> .) ]
+
+    statements                     shift and go to state 4
+    statement                      shift and go to state 5
+    list                           shift and go to state 6
+    repeatstmt                     shift and go to state 7
+    empty                          shift and go to state 8
+
+state 4
+
+    (1) repeatstmt -> REPEAT LFLOWER statements . IF LBRACKET condition RBRACKET LFLOWER BREAK RFLOWER RFLOWER
+    (2) statements -> statements . statement
+    (4) statement -> . list
+    (5) statement -> . repeatstmt
+    (6) statement -> . empty
+    (7) list -> . ID list
+    (8) list -> . ID
+    (9) list -> . ID ARROW ID
+    (1) repeatstmt -> . REPEAT LFLOWER statements IF LBRACKET condition RBRACKET LFLOWER BREAK RFLOWER RFLOWER
+    (10) empty -> .
+
+  ! shift/reduce conflict for IF resolved as shift
+  ! shift/reduce conflict for ID resolved as shift
+  ! shift/reduce conflict for REPEAT resolved as shift
+    IF              shift and go to state 10
+    ID              shift and go to state 9
+    REPEAT          shift and go to state 2
+
+  ! IF              [ reduce using rule 10 (empty -> .) ]
+  ! ID              [ reduce using rule 10 (empty -> .) ]
+  ! REPEAT          [ reduce using rule 10 (empty -> .) ]
+
+    statement                      shift and go to state 11
+    list                           shift and go to state 6
+    repeatstmt                     shift and go to state 7
+    empty                          shift and go to state 8
+
+state 5
+
+    (3) statements -> statement .
+
+    IF              reduce using rule 3 (statements -> statement .)
+    ID              reduce using rule 3 (statements -> statement .)
+    REPEAT          reduce using rule 3 (statements -> statement .)
+
+
+state 6
+
+    (4) statement -> list .
+
+    IF              reduce using rule 4 (statement -> list .)
+    ID              reduce using rule 4 (statement -> list .)
+    REPEAT          reduce using rule 4 (statement -> list .)
+
+
+state 7
+
+    (5) statement -> repeatstmt .
+
+    IF              reduce using rule 5 (statement -> repeatstmt .)
+    ID              reduce using rule 5 (statement -> repeatstmt .)
+    REPEAT          reduce using rule 5 (statement -> repeatstmt .)
+
+
+state 8
+
+    (6) statement -> empty .
+
+    IF              reduce using rule 6 (statement -> empty .)
+    ID              reduce using rule 6 (statement -> empty .)
+    REPEAT          reduce using rule 6 (statement -> empty .)
+
+
+state 9
+
+    (7) list -> ID . list
+    (8) list -> ID .
+    (9) list -> ID . ARROW ID
+    (7) list -> . ID list
+    (8) list -> . ID
+    (9) list -> . ID ARROW ID
+
+  ! shift/reduce conflict for ID resolved as shift
+    IF              reduce using rule 8 (list -> ID .)
+    REPEAT          reduce using rule 8 (list -> ID .)
+    ARROW           shift and go to state 13
+    ID              shift and go to state 9
+
+  ! ID              [ reduce using rule 8 (list -> ID .) ]
+
+    list                           shift and go to state 12
+
+state 10
+
+    (1) repeatstmt -> REPEAT LFLOWER statements IF . LBRACKET condition RBRACKET LFLOWER BREAK RFLOWER RFLOWER
+
+    LBRACKET        shift and go to state 14
+
+
+state 11
+
+    (2) statements -> statements statement .
+
+    IF              reduce using rule 2 (statements -> statements statement .)
+    ID              reduce using rule 2 (statements -> statements statement .)
+    REPEAT          reduce using rule 2 (statements -> statements statement .)
+
+
+state 12
+
+    (7) list -> ID list .
+
+    IF              reduce using rule 7 (list -> ID list .)
+    ID              reduce using rule 7 (list -> ID list .)
+    REPEAT          reduce using rule 7 (list -> ID list .)
+
+
+state 13
+
+    (9) list -> ID ARROW . ID
+
+    ID              shift and go to state 15
+
+
+state 14
+
+    (1) repeatstmt -> REPEAT LFLOWER statements IF LBRACKET . condition RBRACKET LFLOWER BREAK RFLOWER RFLOWER
+    (11) condition -> . ID EQUALS ID
+    (12) condition -> . ID GREATER ID
+    (13) condition -> . ID LESSER ID
+    (14) condition -> . ID GREATER EQUALS ID
+    (15) condition -> . ID LESSER EQUALS ID
+    (16) condition -> . ID NOT EQUALS ID
+    (17) condition -> . condition AND condition
+    (18) condition -> . condition OR condition
+    (19) condition -> . ID
+
+    ID              shift and go to state 17
+
+    condition                      shift and go to state 16
+
+state 15
+
+    (9) list -> ID ARROW ID .
+
+    IF              reduce using rule 9 (list -> ID ARROW ID .)
+    ID              reduce using rule 9 (list -> ID ARROW ID .)
+    REPEAT          reduce using rule 9 (list -> ID ARROW ID .)
+
+
+state 16
+
+    (1) repeatstmt -> REPEAT LFLOWER statements IF LBRACKET condition . RBRACKET LFLOWER BREAK RFLOWER RFLOWER
+    (17) condition -> condition . AND condition
+    (18) condition -> condition . OR condition
+
+    RBRACKET        shift and go to state 18
+    AND             shift and go to state 19
+    OR              shift and go to state 20
+
+
+state 17
+
+    (11) condition -> ID . EQUALS ID
+    (12) condition -> ID . GREATER ID
+    (13) condition -> ID . LESSER ID
+    (14) condition -> ID . GREATER EQUALS ID
+    (15) condition -> ID . LESSER EQUALS ID
+    (16) condition -> ID . NOT EQUALS ID
+    (19) condition -> ID .
+
+    EQUALS          shift and go to state 21
+    GREATER         shift and go to state 22
+    LESSER          shift and go to state 23
+    NOT             shift and go to state 24
+    RBRACKET        reduce using rule 19 (condition -> ID .)
+    AND             reduce using rule 19 (condition -> ID .)
+    OR              reduce using rule 19 (condition -> ID .)
+
+
+state 18
+
+    (1) repeatstmt -> REPEAT LFLOWER statements IF LBRACKET condition RBRACKET . LFLOWER BREAK RFLOWER RFLOWER
+
+    LFLOWER         shift and go to state 25
+
+
+state 19
+
+    (17) condition -> condition AND . condition
+    (11) condition -> . ID EQUALS ID
+    (12) condition -> . ID GREATER ID
+    (13) condition -> . ID LESSER ID
+    (14) condition -> . ID GREATER EQUALS ID
+    (15) condition -> . ID LESSER EQUALS ID
+    (16) condition -> . ID NOT EQUALS ID
+    (17) condition -> . condition AND condition
+    (18) condition -> . condition OR condition
+    (19) condition -> . ID
+
+    ID              shift and go to state 17
+
+    condition                      shift and go to state 26
+
+state 20
+
+    (18) condition -> condition OR . condition
+    (11) condition -> . ID EQUALS ID
+    (12) condition -> . ID GREATER ID
+    (13) condition -> . ID LESSER ID
+    (14) condition -> . ID GREATER EQUALS ID
+    (15) condition -> . ID LESSER EQUALS ID
+    (16) condition -> . ID NOT EQUALS ID
+    (17) condition -> . condition AND condition
+    (18) condition -> . condition OR condition
+    (19) condition -> . ID
+
+    ID              shift and go to state 17
+
+    condition                      shift and go to state 27
+
+state 21
+
+    (11) condition -> ID EQUALS . ID
+
+    ID              shift and go to state 28
+
+
+state 22
+
+    (12) condition -> ID GREATER . ID
+    (14) condition -> ID GREATER . EQUALS ID
+
+    ID              shift and go to state 29
+    EQUALS          shift and go to state 30
+
+
+state 23
+
+    (13) condition -> ID LESSER . ID
+    (15) condition -> ID LESSER . EQUALS ID
+
+    ID              shift and go to state 31
+    EQUALS          shift and go to state 32
+
+
+state 24
+
+    (16) condition -> ID NOT . EQUALS ID
+
+    EQUALS          shift and go to state 33
+
+
+state 25
+
+    (1) repeatstmt -> REPEAT LFLOWER statements IF LBRACKET condition RBRACKET LFLOWER . BREAK RFLOWER RFLOWER
+
+    BREAK           shift and go to state 34
+
+
+state 26
+
+    (17) condition -> condition AND condition .
+    (17) condition -> condition . AND condition
+    (18) condition -> condition . OR condition
+
+  ! shift/reduce conflict for AND resolved as shift
+  ! shift/reduce conflict for OR resolved as shift
+    RBRACKET        reduce using rule 17 (condition -> condition AND condition .)
+    AND             shift and go to state 19
+    OR              shift and go to state 20
+
+  ! AND             [ reduce using rule 17 (condition -> condition AND condition .) ]
+  ! OR              [ reduce using rule 17 (condition -> condition AND condition .) ]
+
+
+state 27
+
+    (18) condition -> condition OR condition .
+    (17) condition -> condition . AND condition
+    (18) condition -> condition . OR condition
+
+  ! shift/reduce conflict for AND resolved as shift
+  ! shift/reduce conflict for OR resolved as shift
+    RBRACKET        reduce using rule 18 (condition -> condition OR condition .)
+    AND             shift and go to state 19
+    OR              shift and go to state 20
+
+  ! AND             [ reduce using rule 18 (condition -> condition OR condition .) ]
+  ! OR              [ reduce using rule 18 (condition -> condition OR condition .) ]
+
+
+state 28
+
+    (11) condition -> ID EQUALS ID .
+
+    RBRACKET        reduce using rule 11 (condition -> ID EQUALS ID .)
+    AND             reduce using rule 11 (condition -> ID EQUALS ID .)
+    OR              reduce using rule 11 (condition -> ID EQUALS ID .)
+
+
+state 29
+
+    (12) condition -> ID GREATER ID .
+
+    RBRACKET        reduce using rule 12 (condition -> ID GREATER ID .)
+    AND             reduce using rule 12 (condition -> ID GREATER ID .)
+    OR              reduce using rule 12 (condition -> ID GREATER ID .)
+
+
+state 30
+
+    (14) condition -> ID GREATER EQUALS . ID
+
+    ID              shift and go to state 35
+
+
+state 31
+
+    (13) condition -> ID LESSER ID .
+
+    RBRACKET        reduce using rule 13 (condition -> ID LESSER ID .)
+    AND             reduce using rule 13 (condition -> ID LESSER ID .)
+    OR              reduce using rule 13 (condition -> ID LESSER ID .)
+
+
+state 32
+
+    (15) condition -> ID LESSER EQUALS . ID
+
+    ID              shift and go to state 36
+
+
+state 33
+
+    (16) condition -> ID NOT EQUALS . ID
+
+    ID              shift and go to state 37
+
+
+state 34
+
+    (1) repeatstmt -> REPEAT LFLOWER statements IF LBRACKET condition RBRACKET LFLOWER BREAK . RFLOWER RFLOWER
+
+    RFLOWER         shift and go to state 38
+
+
+state 35
+
+    (14) condition -> ID GREATER EQUALS ID .
+
+    RBRACKET        reduce using rule 14 (condition -> ID GREATER EQUALS ID .)
+    AND             reduce using rule 14 (condition -> ID GREATER EQUALS ID .)
+    OR              reduce using rule 14 (condition -> ID GREATER EQUALS ID .)
+
+
+state 36
+
+    (15) condition -> ID LESSER EQUALS ID .
+
+    RBRACKET        reduce using rule 15 (condition -> ID LESSER EQUALS ID .)
+    AND             reduce using rule 15 (condition -> ID LESSER EQUALS ID .)
+    OR              reduce using rule 15 (condition -> ID LESSER EQUALS ID .)
+
+
+state 37
+
+    (16) condition -> ID NOT EQUALS ID .
+
+    RBRACKET        reduce using rule 16 (condition -> ID NOT EQUALS ID .)
+    AND             reduce using rule 16 (condition -> ID NOT EQUALS ID .)
+    OR              reduce using rule 16 (condition -> ID NOT EQUALS ID .)
+
+
+state 38
+
+    (1) repeatstmt -> REPEAT LFLOWER statements IF LBRACKET condition RBRACKET LFLOWER BREAK RFLOWER . RFLOWER
+
+    RFLOWER         shift and go to state 39
+
+
+state 39
+
+    (1) repeatstmt -> REPEAT LFLOWER statements IF LBRACKET condition RBRACKET LFLOWER BREAK RFLOWER RFLOWER .
+
+    $end            reduce using rule 1 (repeatstmt -> REPEAT LFLOWER statements IF LBRACKET condition RBRACKET LFLOWER BREAK RFLOWER RFLOWER .)
+    IF              reduce using rule 1 (repeatstmt -> REPEAT LFLOWER statements IF LBRACKET condition RBRACKET LFLOWER BREAK RFLOWER RFLOWER .)
+    ID              reduce using rule 1 (repeatstmt -> REPEAT LFLOWER statements IF LBRACKET condition RBRACKET LFLOWER BREAK RFLOWER RFLOWER .)
+    REPEAT          reduce using rule 1 (repeatstmt -> REPEAT LFLOWER statements IF LBRACKET condition RBRACKET LFLOWER BREAK RFLOWER RFLOWER .)
+
+WARNING: 
+WARNING: Conflicts:
+WARNING: 
+WARNING: shift/reduce conflict for ID in state 3 resolved as shift
+WARNING: shift/reduce conflict for REPEAT in state 3 resolved as shift
+WARNING: shift/reduce conflict for IF in state 4 resolved as shift
+WARNING: shift/reduce conflict for ID in state 4 resolved as shift
+WARNING: shift/reduce conflict for REPEAT in state 4 resolved as shift
+WARNING: shift/reduce conflict for ID in state 9 resolved as shift
+WARNING: shift/reduce conflict for AND in state 26 resolved as shift
+WARNING: shift/reduce conflict for OR in state 26 resolved as shift
+WARNING: shift/reduce conflict for AND in state 27 resolved as shift
+WARNING: shift/reduce conflict for OR in state 27 resolved as shift

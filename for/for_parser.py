@@ -9,28 +9,28 @@ def p_while(p):
       | FOR LBRACE ID IN ID RBRACE singleStatement
     '''
     # this works for
-    #case 1:for(x in 1:10){a=10}
-    #case 2:for(x in abc){a=10}
-    #case 3:for(x in 1:10)a=10
-    #case 4:for(x in abc)a=10
+    #case 1:for(x in 1:10){a<-10}
+    #case 2:for(x in abc){a<-10}
+    #case 3:for(x in 1:10)a<-10
+    #case 4:for(x in abc)a<-10
     
-    if len(p) == 12:
-        p[0] = (p[1], p[3], p[4], p[5], p[6], p[7], p[10])  
-    elif len(p) == 8:
-        p[0] = (p[1], p[3], p[4], p[5], p[7])
-    elif len(p) == 10 and p[6] == ':':
-        p[0] = (p[1], p[3], p[4], p[5], p[6], p[7], p[9])
-    else:
-        p[0] = (p[1], p[3], p[4], p[5], p[8])
+    # if len(p) == 12:
+    #     p[0] = (p[1], p[3], p[4], p[5], p[6], p[7], p[10])  
+    # elif len(p) == 8:
+    #     p[0] = (p[1], p[3], p[4], p[5], p[7])
+    # elif len(p) == 10 and p[6] == ':':
+    #     p[0] = (p[1], p[3], p[4], p[5], p[6], p[7], p[9])
+    # else:
+    #     p[0] = (p[1], p[3], p[4], p[5], p[8])
 def p_statements(p):
     '''
     statements  : statements statement
                 | statement
     '''
-    if len(p) == 2:
-        p[0] = (p[1],)
-    else:
-        p[0] = p[1]+(p[2],)
+    # if len(p) == 2:
+    #     p[0] = (p[1],)
+    # else:
+    #     p[0] = p[1]+(p[2],)
 def p_statement(p):
     '''
     statement   : list 
@@ -47,17 +47,19 @@ def p_list(p):
     '''
     list    : ID list
             | ID
+            | ID ARROW NUM
     '''
 def p_empty(p):
     '''
     empty :
     '''
-    p[0] = None
+    # p[0] = None
 
 def p_error(p):
     print("Syntax error",p)
     global flag 
     flag = 1
+
 print("Welcome,You are entering for loop declaration")
 parser = yacc.yacc()
 while True:

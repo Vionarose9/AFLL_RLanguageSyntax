@@ -17,18 +17,20 @@ Rule 11    singleStatement -> empty
 Rule 12    singleStatement -> nextstmt
 Rule 13    list -> ID list
 Rule 14    list -> ID
-Rule 15    empty -> <empty>
+Rule 15    list -> ID ARROW NUM
+Rule 16    empty -> <empty>
 
 Terminals, with rules where they appear
 
+ARROW                : 15
 COLON                : 1 3
 FOR                  : 1 2 3 4
-ID                   : 1 2 2 3 4 4 13 14
+ID                   : 1 2 2 3 4 4 13 14 15
 IN                   : 1 2 3 4
 LBRACKET             : 1 2 3 4
 LFLOWER              : 1 2
 NEXT                 : 1 2 3 4
-NUM                  : 1 1 3 3
+NUM                  : 1 1 3 3 15
 RBRACKET             : 1 2 3 4
 RFLOWER              : 1 2
 error                : 
@@ -151,7 +153,8 @@ state 11
     (12) singleStatement -> . nextstmt
     (13) list -> . ID list
     (14) list -> . ID
-    (15) empty -> .
+    (15) list -> . ID ARROW NUM
+    (16) empty -> .
     (1) nextstmt -> . FOR LBRACKET ID IN NUM COLON NUM RBRACKET LFLOWER NEXT statements RFLOWER
     (2) nextstmt -> . FOR LBRACKET ID IN ID RBRACKET LFLOWER NEXT statements RFLOWER
     (3) nextstmt -> . FOR LBRACKET ID IN NUM COLON NUM RBRACKET NEXT singleStatement
@@ -160,12 +163,12 @@ state 11
   ! shift/reduce conflict for ID resolved as shift
   ! shift/reduce conflict for FOR resolved as shift
     ID              shift and go to state 14
-    $end            reduce using rule 15 (empty -> .)
-    RFLOWER         reduce using rule 15 (empty -> .)
+    $end            reduce using rule 16 (empty -> .)
+    RFLOWER         reduce using rule 16 (empty -> .)
     FOR             shift and go to state 2
 
-  ! ID              [ reduce using rule 15 (empty -> .) ]
-  ! FOR             [ reduce using rule 15 (empty -> .) ]
+  ! ID              [ reduce using rule 16 (empty -> .) ]
+  ! FOR             [ reduce using rule 16 (empty -> .) ]
 
     singleStatement                shift and go to state 15
     list                           shift and go to state 16
@@ -190,20 +193,21 @@ state 13
     (9) statement -> . empty
     (13) list -> . ID list
     (14) list -> . ID
+    (15) list -> . ID ARROW NUM
     (1) nextstmt -> . FOR LBRACKET ID IN NUM COLON NUM RBRACKET LFLOWER NEXT statements RFLOWER
     (2) nextstmt -> . FOR LBRACKET ID IN ID RBRACKET LFLOWER NEXT statements RFLOWER
     (3) nextstmt -> . FOR LBRACKET ID IN NUM COLON NUM RBRACKET NEXT singleStatement
     (4) nextstmt -> . FOR LBRACKET ID IN ID RBRACKET NEXT singleStatement
-    (15) empty -> .
+    (16) empty -> .
 
   ! shift/reduce conflict for ID resolved as shift
   ! shift/reduce conflict for FOR resolved as shift
     ID              shift and go to state 14
     FOR             shift and go to state 2
-    RFLOWER         reduce using rule 15 (empty -> .)
+    RFLOWER         reduce using rule 16 (empty -> .)
 
-  ! ID              [ reduce using rule 15 (empty -> .) ]
-  ! FOR             [ reduce using rule 15 (empty -> .) ]
+  ! ID              [ reduce using rule 16 (empty -> .) ]
+  ! FOR             [ reduce using rule 16 (empty -> .) ]
 
     statements                     shift and go to state 20
     statement                      shift and go to state 21
@@ -215,13 +219,16 @@ state 14
 
     (13) list -> ID . list
     (14) list -> ID .
+    (15) list -> ID . ARROW NUM
     (13) list -> . ID list
     (14) list -> . ID
+    (15) list -> . ID ARROW NUM
 
   ! shift/reduce conflict for ID resolved as shift
     $end            reduce using rule 14 (list -> ID .)
     RFLOWER         reduce using rule 14 (list -> ID .)
     FOR             reduce using rule 14 (list -> ID .)
+    ARROW           shift and go to state 26
     ID              shift and go to state 14
 
   ! ID              [ reduce using rule 14 (list -> ID .) ]
@@ -273,8 +280,8 @@ state 19
     (1) nextstmt -> FOR LBRACKET ID IN NUM COLON NUM RBRACKET . LFLOWER NEXT statements RFLOWER
     (3) nextstmt -> FOR LBRACKET ID IN NUM COLON NUM RBRACKET . NEXT singleStatement
 
-    LFLOWER         shift and go to state 26
-    NEXT            shift and go to state 27
+    LFLOWER         shift and go to state 27
+    NEXT            shift and go to state 28
 
 
 state 20
@@ -286,24 +293,25 @@ state 20
     (9) statement -> . empty
     (13) list -> . ID list
     (14) list -> . ID
+    (15) list -> . ID ARROW NUM
     (1) nextstmt -> . FOR LBRACKET ID IN NUM COLON NUM RBRACKET LFLOWER NEXT statements RFLOWER
     (2) nextstmt -> . FOR LBRACKET ID IN ID RBRACKET LFLOWER NEXT statements RFLOWER
     (3) nextstmt -> . FOR LBRACKET ID IN NUM COLON NUM RBRACKET NEXT singleStatement
     (4) nextstmt -> . FOR LBRACKET ID IN ID RBRACKET NEXT singleStatement
-    (15) empty -> .
+    (16) empty -> .
 
   ! shift/reduce conflict for RFLOWER resolved as shift
   ! shift/reduce conflict for ID resolved as shift
   ! shift/reduce conflict for FOR resolved as shift
-    RFLOWER         shift and go to state 28
+    RFLOWER         shift and go to state 29
     ID              shift and go to state 14
     FOR             shift and go to state 2
 
-  ! RFLOWER         [ reduce using rule 15 (empty -> .) ]
-  ! ID              [ reduce using rule 15 (empty -> .) ]
-  ! FOR             [ reduce using rule 15 (empty -> .) ]
+  ! RFLOWER         [ reduce using rule 16 (empty -> .) ]
+  ! ID              [ reduce using rule 16 (empty -> .) ]
+  ! FOR             [ reduce using rule 16 (empty -> .) ]
 
-    statement                      shift and go to state 29
+    statement                      shift and go to state 30
     list                           shift and go to state 22
     nextstmt                       shift and go to state 23
     empty                          shift and go to state 24
@@ -356,12 +364,19 @@ state 25
 
 state 26
 
-    (1) nextstmt -> FOR LBRACKET ID IN NUM COLON NUM RBRACKET LFLOWER . NEXT statements RFLOWER
+    (15) list -> ID ARROW . NUM
 
-    NEXT            shift and go to state 30
+    NUM             shift and go to state 31
 
 
 state 27
+
+    (1) nextstmt -> FOR LBRACKET ID IN NUM COLON NUM RBRACKET LFLOWER . NEXT statements RFLOWER
+
+    NEXT            shift and go to state 32
+
+
+state 28
 
     (3) nextstmt -> FOR LBRACKET ID IN NUM COLON NUM RBRACKET NEXT . singleStatement
     (10) singleStatement -> . list
@@ -369,7 +384,8 @@ state 27
     (12) singleStatement -> . nextstmt
     (13) list -> . ID list
     (14) list -> . ID
-    (15) empty -> .
+    (15) list -> . ID ARROW NUM
+    (16) empty -> .
     (1) nextstmt -> . FOR LBRACKET ID IN NUM COLON NUM RBRACKET LFLOWER NEXT statements RFLOWER
     (2) nextstmt -> . FOR LBRACKET ID IN ID RBRACKET LFLOWER NEXT statements RFLOWER
     (3) nextstmt -> . FOR LBRACKET ID IN NUM COLON NUM RBRACKET NEXT singleStatement
@@ -378,19 +394,19 @@ state 27
   ! shift/reduce conflict for ID resolved as shift
   ! shift/reduce conflict for FOR resolved as shift
     ID              shift and go to state 14
-    $end            reduce using rule 15 (empty -> .)
-    RFLOWER         reduce using rule 15 (empty -> .)
+    $end            reduce using rule 16 (empty -> .)
+    RFLOWER         reduce using rule 16 (empty -> .)
     FOR             shift and go to state 2
 
-  ! ID              [ reduce using rule 15 (empty -> .) ]
-  ! FOR             [ reduce using rule 15 (empty -> .) ]
+  ! ID              [ reduce using rule 16 (empty -> .) ]
+  ! FOR             [ reduce using rule 16 (empty -> .) ]
 
-    singleStatement                shift and go to state 31
+    singleStatement                shift and go to state 33
     list                           shift and go to state 16
     empty                          shift and go to state 17
     nextstmt                       shift and go to state 18
 
-state 28
+state 29
 
     (2) nextstmt -> FOR LBRACKET ID IN ID RBRACKET LFLOWER NEXT statements RFLOWER .
 
@@ -400,7 +416,7 @@ state 28
     FOR             reduce using rule 2 (nextstmt -> FOR LBRACKET ID IN ID RBRACKET LFLOWER NEXT statements RFLOWER .)
 
 
-state 29
+state 30
 
     (5) statements -> statements statement .
 
@@ -409,7 +425,17 @@ state 29
     FOR             reduce using rule 5 (statements -> statements statement .)
 
 
-state 30
+state 31
+
+    (15) list -> ID ARROW NUM .
+
+    $end            reduce using rule 15 (list -> ID ARROW NUM .)
+    RFLOWER         reduce using rule 15 (list -> ID ARROW NUM .)
+    ID              reduce using rule 15 (list -> ID ARROW NUM .)
+    FOR             reduce using rule 15 (list -> ID ARROW NUM .)
+
+
+state 32
 
     (1) nextstmt -> FOR LBRACKET ID IN NUM COLON NUM RBRACKET LFLOWER NEXT . statements RFLOWER
     (5) statements -> . statements statement
@@ -419,28 +445,29 @@ state 30
     (9) statement -> . empty
     (13) list -> . ID list
     (14) list -> . ID
+    (15) list -> . ID ARROW NUM
     (1) nextstmt -> . FOR LBRACKET ID IN NUM COLON NUM RBRACKET LFLOWER NEXT statements RFLOWER
     (2) nextstmt -> . FOR LBRACKET ID IN ID RBRACKET LFLOWER NEXT statements RFLOWER
     (3) nextstmt -> . FOR LBRACKET ID IN NUM COLON NUM RBRACKET NEXT singleStatement
     (4) nextstmt -> . FOR LBRACKET ID IN ID RBRACKET NEXT singleStatement
-    (15) empty -> .
+    (16) empty -> .
 
   ! shift/reduce conflict for ID resolved as shift
   ! shift/reduce conflict for FOR resolved as shift
     ID              shift and go to state 14
     FOR             shift and go to state 2
-    RFLOWER         reduce using rule 15 (empty -> .)
+    RFLOWER         reduce using rule 16 (empty -> .)
 
-  ! ID              [ reduce using rule 15 (empty -> .) ]
-  ! FOR             [ reduce using rule 15 (empty -> .) ]
+  ! ID              [ reduce using rule 16 (empty -> .) ]
+  ! FOR             [ reduce using rule 16 (empty -> .) ]
 
-    statements                     shift and go to state 32
+    statements                     shift and go to state 34
     statement                      shift and go to state 21
     list                           shift and go to state 22
     nextstmt                       shift and go to state 23
     empty                          shift and go to state 24
 
-state 31
+state 33
 
     (3) nextstmt -> FOR LBRACKET ID IN NUM COLON NUM RBRACKET NEXT singleStatement .
 
@@ -450,7 +477,7 @@ state 31
     FOR             reduce using rule 3 (nextstmt -> FOR LBRACKET ID IN NUM COLON NUM RBRACKET NEXT singleStatement .)
 
 
-state 32
+state 34
 
     (1) nextstmt -> FOR LBRACKET ID IN NUM COLON NUM RBRACKET LFLOWER NEXT statements . RFLOWER
     (5) statements -> statements . statement
@@ -459,29 +486,30 @@ state 32
     (9) statement -> . empty
     (13) list -> . ID list
     (14) list -> . ID
+    (15) list -> . ID ARROW NUM
     (1) nextstmt -> . FOR LBRACKET ID IN NUM COLON NUM RBRACKET LFLOWER NEXT statements RFLOWER
     (2) nextstmt -> . FOR LBRACKET ID IN ID RBRACKET LFLOWER NEXT statements RFLOWER
     (3) nextstmt -> . FOR LBRACKET ID IN NUM COLON NUM RBRACKET NEXT singleStatement
     (4) nextstmt -> . FOR LBRACKET ID IN ID RBRACKET NEXT singleStatement
-    (15) empty -> .
+    (16) empty -> .
 
   ! shift/reduce conflict for RFLOWER resolved as shift
   ! shift/reduce conflict for ID resolved as shift
   ! shift/reduce conflict for FOR resolved as shift
-    RFLOWER         shift and go to state 33
+    RFLOWER         shift and go to state 35
     ID              shift and go to state 14
     FOR             shift and go to state 2
 
-  ! RFLOWER         [ reduce using rule 15 (empty -> .) ]
-  ! ID              [ reduce using rule 15 (empty -> .) ]
-  ! FOR             [ reduce using rule 15 (empty -> .) ]
+  ! RFLOWER         [ reduce using rule 16 (empty -> .) ]
+  ! ID              [ reduce using rule 16 (empty -> .) ]
+  ! FOR             [ reduce using rule 16 (empty -> .) ]
 
-    statement                      shift and go to state 29
+    statement                      shift and go to state 30
     list                           shift and go to state 22
     nextstmt                       shift and go to state 23
     empty                          shift and go to state 24
 
-state 33
+state 35
 
     (1) nextstmt -> FOR LBRACKET ID IN NUM COLON NUM RBRACKET LFLOWER NEXT statements RFLOWER .
 
@@ -501,10 +529,10 @@ WARNING: shift/reduce conflict for ID in state 14 resolved as shift
 WARNING: shift/reduce conflict for RFLOWER in state 20 resolved as shift
 WARNING: shift/reduce conflict for ID in state 20 resolved as shift
 WARNING: shift/reduce conflict for FOR in state 20 resolved as shift
-WARNING: shift/reduce conflict for ID in state 27 resolved as shift
-WARNING: shift/reduce conflict for FOR in state 27 resolved as shift
-WARNING: shift/reduce conflict for ID in state 30 resolved as shift
-WARNING: shift/reduce conflict for FOR in state 30 resolved as shift
-WARNING: shift/reduce conflict for RFLOWER in state 32 resolved as shift
+WARNING: shift/reduce conflict for ID in state 28 resolved as shift
+WARNING: shift/reduce conflict for FOR in state 28 resolved as shift
 WARNING: shift/reduce conflict for ID in state 32 resolved as shift
 WARNING: shift/reduce conflict for FOR in state 32 resolved as shift
+WARNING: shift/reduce conflict for RFLOWER in state 34 resolved as shift
+WARNING: shift/reduce conflict for ID in state 34 resolved as shift
+WARNING: shift/reduce conflict for FOR in state 34 resolved as shift

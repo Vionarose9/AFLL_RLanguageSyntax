@@ -8,57 +8,58 @@ def p_while(p):
                         | WHILE LBRACKET conditions RBRACKET singleStatement 
     '''
     #this works for
-    #case 1: while(x>10){a=10}
-    #case 2: while(x>10)a=10
+    #case 1: while(x>10){a<-10}
+    #case 2: while(x>10)a<-10
     
-    if len(p) == 6:
-        p[0] = (p[1],p[3],p[5])
-    else:
-        p[0] = (p[1],p[3],p[6])
+    # if len(p) == 6:
+    #     p[0] = (p[1],p[3],p[5])
+    # else:
+    #     p[0] = (p[1],p[3],p[6])
 def p_statements(p):
     '''
     statements  : statements statement
                 | statement
     '''
-    if len(p) == 2:
-        p[0] = (p[1],)
-    else:
-        p[0] = p[1]+(p[2],)
+    # if len(p) == 2:
+    #     p[0] = (p[1],)
+    # else:
+    #     p[0] = p[1]+(p[2],)
 def p_statement(p):
     '''
     statement   : list 
                 | while_statement
                 | empty
     '''
-    if len(p) == 3:
-        p[0] = (p[1],)
-    else:
-        p[0] = p[1]
+    # if len(p) == 3:
+    #     p[0] = (p[1],)
+    # else:
+    #     p[0] = p[1]
 def p_singleStatement(p):
     '''
     singleStatement  : list 
                     | empty
                     | while_statement
     '''
-    if len(p) == 3:
-        p[0] = (p[1],)
-    else:
-        p[0] = p[1]
+    # if len(p) == 3:
+    #     p[0] = (p[1],)
+    # else:
+    #     p[0] = p[1]
 def p_list(p):
     '''
     list    : ID list
             | ID
+            | ID ARROW ID
     '''
-    if len(p) == 2:
-        p[0] = [p[1]]
-    else:
-        p[0] = [p[1]]+p[2]
+    # if len(p) == 2:
+    #     p[0] = [p[1]]
+    # else:
+    #     p[0] = [p[1]]+p[2]
 
 def p_empty(p):
     '''
     empty :
     '''
-    p[0] = None
+    # p[0] = None
 def p_conditions(p):
     '''
     conditions  : ID EQUALS ID 
@@ -71,10 +72,10 @@ def p_conditions(p):
                 | conditions OR conditions
                 | ID
     '''
-    if len(p) == 2:
-        p[0] = ('condition',p[1])
-    else :
-        p[0] = ('condition',p[1],p[2],p[3])
+    # if len(p) == 2:
+    #     p[0] = ('condition',p[1])
+    # else :
+    #     p[0] = ('condition',p[1],p[2],p[3])
 def p_error(p):
     print("Syntax error")
     global flag 
@@ -85,7 +86,7 @@ parser = yacc.yacc()
 while True:
    flag = 0
    try:
-       s = input('enter the conditional statement:')
+       s = input('enter while statement:')
    except EOFError:
        break
    if not s: 

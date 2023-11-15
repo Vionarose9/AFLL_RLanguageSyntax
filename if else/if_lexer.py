@@ -4,15 +4,21 @@ tokens=('IF','LEFTBRACKET','RIGHTBRACKET','RIGHTBRACE','LEFTBRACE','ELSE','ID','
           'EQUALS',
           'NOT',
           'AND',
-          'OR')
+          'OR',
+          'ARROW')
+
+#defining tokens
 t_LEFTBRACKET = r'\('
 t_RIGHTBRACKET=r'\)'
 t_RIGHTBRACE=r'\}'
 t_LEFTBRACE=r'\{'
 
-
 def t_IF(t):
     r'if'
+    return t
+
+def t_ARROW(t):
+    r'<-'
     return t
 
 t_ignore = ' \t'
@@ -36,11 +42,10 @@ def t_error(t):
     print(f"Illegal character encountered {t.value[0]}")
     t.lexer.skip(1)
 
-lexer=lex.lex()
 
+lexer=lex.lex()
 data=input()
 lexer.input(data)
-
 while(1):
     tok=lexer.token()
     if not tok:

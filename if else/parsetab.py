@@ -6,9 +6,9 @@ _tabversion = '3.10'
 
 _lr_method = 'LALR'
 
-_lr_signature = 'AND ELSE EQUALS GREATER ID IF LEFTBRACE LEFTBRACKET LESSER NOT OR RIGHTBRACE RIGHTBRACKET\n    ifstmt :  IF LEFTBRACKET conditions RIGHTBRACKET LEFTBRACE statements RIGHTBRACE\n           |  IF LEFTBRACKET conditions RIGHTBRACKET statementSingle\n           |  IF LEFTBRACKET conditions RIGHTBRACKET LEFTBRACE statements RIGHTBRACE ELSE LEFTBRACE statements RIGHTBRACE\n           |  IF LEFTBRACKET conditions RIGHTBRACKET statements ELSE statements\n    \n    statements : statements statement\n               | statement\n    \n    statement : list \n             | ifstmt\n             | empty\n    \n    statementSingle : ifstmt\n                    | list\n                    | empty\n    \n    list : ID list \n         | ID\n    \n    empty :\n    \n    conditions  : ID EQUALS ID \n                | ID GREATER ID \n                | ID LESSER ID \n                | ID GREATER EQUALS ID \n                | ID LESSER EQUALS ID \n                | ID NOT EQUALS ID\n                | conditions AND conditions \n                | conditions OR conditions\n                | ID\n    '
+_lr_signature = 'AND ARROW ELSE EQUALS GREATER ID IF LEFTBRACE LEFTBRACKET LESSER NOT OR RIGHTBRACE RIGHTBRACKET\n    ifstmt :  IF LEFTBRACKET conditions RIGHTBRACKET LEFTBRACE statements RIGHTBRACE\n           |  IF LEFTBRACKET conditions RIGHTBRACKET statementSingle\n           |  IF LEFTBRACKET conditions RIGHTBRACKET LEFTBRACE statements RIGHTBRACE ELSE LEFTBRACE statements RIGHTBRACE\n           |  IF LEFTBRACKET conditions RIGHTBRACKET statements ELSE statements\n    \n    statements : statements statement\n               | statement\n    \n    statement : list \n             | ifstmt\n             | empty\n    \n    statementSingle : ifstmt\n                    | list\n                    | empty\n    \n    list : ID list \n         | ID\n         | ID ARROW ID\n    \n    empty :\n    \n    conditions  : ID EQUALS ID \n                | ID GREATER ID \n                | ID LESSER ID \n                | ID GREATER EQUALS ID \n                | ID LESSER EQUALS ID \n                | ID NOT EQUALS ID\n                | conditions AND conditions \n                | conditions OR conditions\n                | ID\n    '
     
-_lr_action_items = {'IF':([0,6,13,14,15,16,17,18,19,20,29,30,31,32,33,34,35,39,40,42,43,44,],[2,2,2,2,-2,-8,-7,-9,-6,-14,2,-7,-8,-9,2,-5,-13,-1,2,2,2,-3,]),'$end':([1,6,15,16,17,18,19,20,30,31,32,33,34,35,39,40,44,],[0,-15,-2,-10,-11,-12,-6,-14,-7,-8,-9,-15,-5,-13,-1,-4,-3,]),'LEFTBRACKET':([2,],[3,]),'ID':([3,6,7,8,9,10,11,13,14,15,16,17,18,19,20,25,27,28,29,30,31,32,33,34,35,39,40,42,43,44,],[5,20,5,5,23,24,26,20,20,-2,-8,-7,-9,-6,20,36,37,38,20,-7,-8,-9,20,-5,-13,-1,20,20,20,-3,]),'RIGHTBRACKET':([4,5,21,22,23,24,26,36,37,38,],[6,-24,-22,-23,-16,-17,-18,-19,-20,-21,]),'AND':([4,5,21,22,23,24,26,36,37,38,],[7,-24,7,7,-16,-17,-18,-19,-20,-21,]),'OR':([4,5,21,22,23,24,26,36,37,38,],[8,-24,8,8,-16,-17,-18,-19,-20,-21,]),'EQUALS':([5,10,11,12,],[9,25,27,28,]),'GREATER':([5,],[10,]),'LESSER':([5,],[11,]),'NOT':([5,],[12,]),'LEFTBRACE':([6,41,],[13,42,]),'ELSE':([6,14,15,16,17,18,19,20,30,31,32,33,34,35,39,40,44,],[-15,33,-2,-8,-7,-9,-6,-14,-7,-8,-9,-15,-5,-13,41,-4,-3,]),'RIGHTBRACE':([6,13,15,16,17,18,19,20,29,30,31,32,33,34,35,39,40,42,43,44,],[-15,-15,-2,-10,-11,-12,-6,-14,39,-7,-8,-9,-15,-5,-13,-1,-4,-15,44,-3,]),}
+_lr_action_items = {'IF':([0,6,13,14,15,16,17,18,19,20,29,30,31,32,33,34,35,40,41,42,44,45,46,],[2,2,2,2,-2,-8,-7,-9,-6,-14,2,-7,-8,-9,2,-5,-13,-1,2,-15,2,2,-3,]),'$end':([1,6,15,16,17,18,19,20,30,31,32,33,34,35,40,41,42,46,],[0,-16,-2,-10,-11,-12,-6,-14,-7,-8,-9,-16,-5,-13,-1,-4,-15,-3,]),'LEFTBRACKET':([2,],[3,]),'ID':([3,6,7,8,9,10,11,13,14,15,16,17,18,19,20,25,27,28,29,30,31,32,33,34,35,36,40,41,42,44,45,46,],[5,20,5,5,23,24,26,20,20,-2,-8,-7,-9,-6,20,37,38,39,20,-7,-8,-9,20,-5,-13,42,-1,20,-15,20,20,-3,]),'RIGHTBRACKET':([4,5,21,22,23,24,26,37,38,39,],[6,-25,-23,-24,-17,-18,-19,-20,-21,-22,]),'AND':([4,5,21,22,23,24,26,37,38,39,],[7,-25,7,7,-17,-18,-19,-20,-21,-22,]),'OR':([4,5,21,22,23,24,26,37,38,39,],[8,-25,8,8,-17,-18,-19,-20,-21,-22,]),'EQUALS':([5,10,11,12,],[9,25,27,28,]),'GREATER':([5,],[10,]),'LESSER':([5,],[11,]),'NOT':([5,],[12,]),'LEFTBRACE':([6,43,],[13,44,]),'ELSE':([6,14,15,16,17,18,19,20,30,31,32,33,34,35,40,41,42,46,],[-16,33,-2,-8,-7,-9,-6,-14,-7,-8,-9,-16,-5,-13,43,-4,-15,-3,]),'RIGHTBRACE':([6,13,15,16,17,18,19,20,29,30,31,32,33,34,35,40,41,42,44,45,46,],[-16,-16,-2,-10,-11,-12,-6,-14,40,-7,-8,-9,-16,-5,-13,-1,-4,-15,-16,46,-3,]),'ARROW':([20,],[36,]),}
 
 _lr_action = {}
 for _k, _v in _lr_action_items.items():
@@ -17,7 +17,7 @@ for _k, _v in _lr_action_items.items():
       _lr_action[_x][_k] = _y
 del _lr_action_items
 
-_lr_goto_items = {'ifstmt':([0,6,13,14,29,33,40,42,43,],[1,16,31,31,31,31,31,31,31,]),'conditions':([3,7,8,],[4,21,22,]),'statements':([6,13,33,42,],[14,29,40,43,]),'statementSingle':([6,],[15,]),'list':([6,13,14,20,29,33,40,42,43,],[17,30,30,35,30,30,30,30,30,]),'empty':([6,13,14,29,33,40,42,43,],[18,32,32,32,32,32,32,32,]),'statement':([6,13,14,29,33,40,42,43,],[19,19,34,34,19,34,19,34,]),}
+_lr_goto_items = {'ifstmt':([0,6,13,14,29,33,41,44,45,],[1,16,31,31,31,31,31,31,31,]),'conditions':([3,7,8,],[4,21,22,]),'statements':([6,13,33,44,],[14,29,41,45,]),'statementSingle':([6,],[15,]),'list':([6,13,14,20,29,33,41,44,45,],[17,30,30,35,30,30,30,30,30,]),'empty':([6,13,14,29,33,41,44,45,],[18,32,32,32,32,32,32,32,]),'statement':([6,13,14,29,33,41,44,45,],[19,19,34,34,19,34,19,34,]),}
 
 _lr_goto = {}
 for _k, _v in _lr_goto_items.items():
@@ -41,14 +41,15 @@ _lr_productions = [
   ('statementSingle -> empty','statementSingle',1,'p_statementSingle','if_parser.py',51),
   ('list -> ID list','list',2,'p_list','if_parser.py',60),
   ('list -> ID','list',1,'p_list','if_parser.py',61),
-  ('empty -> <empty>','empty',0,'p_empty','if_parser.py',70),
-  ('conditions -> ID EQUALS ID','conditions',3,'p_conditions','if_parser.py',77),
-  ('conditions -> ID GREATER ID','conditions',3,'p_conditions','if_parser.py',78),
-  ('conditions -> ID LESSER ID','conditions',3,'p_conditions','if_parser.py',79),
-  ('conditions -> ID GREATER EQUALS ID','conditions',4,'p_conditions','if_parser.py',80),
-  ('conditions -> ID LESSER EQUALS ID','conditions',4,'p_conditions','if_parser.py',81),
-  ('conditions -> ID NOT EQUALS ID','conditions',4,'p_conditions','if_parser.py',82),
-  ('conditions -> conditions AND conditions','conditions',3,'p_conditions','if_parser.py',83),
-  ('conditions -> conditions OR conditions','conditions',3,'p_conditions','if_parser.py',84),
-  ('conditions -> ID','conditions',1,'p_conditions','if_parser.py',85),
+  ('list -> ID ARROW ID','list',3,'p_list','if_parser.py',62),
+  ('empty -> <empty>','empty',0,'p_empty','if_parser.py',71),
+  ('conditions -> ID EQUALS ID','conditions',3,'p_conditions','if_parser.py',78),
+  ('conditions -> ID GREATER ID','conditions',3,'p_conditions','if_parser.py',79),
+  ('conditions -> ID LESSER ID','conditions',3,'p_conditions','if_parser.py',80),
+  ('conditions -> ID GREATER EQUALS ID','conditions',4,'p_conditions','if_parser.py',81),
+  ('conditions -> ID LESSER EQUALS ID','conditions',4,'p_conditions','if_parser.py',82),
+  ('conditions -> ID NOT EQUALS ID','conditions',4,'p_conditions','if_parser.py',83),
+  ('conditions -> conditions AND conditions','conditions',3,'p_conditions','if_parser.py',84),
+  ('conditions -> conditions OR conditions','conditions',3,'p_conditions','if_parser.py',85),
+  ('conditions -> ID','conditions',1,'p_conditions','if_parser.py',86),
 ]

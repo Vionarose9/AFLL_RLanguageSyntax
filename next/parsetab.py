@@ -6,9 +6,9 @@ _tabversion = '3.10'
 
 _lr_method = 'LALR'
 
-_lr_signature = 'COLON FOR ID IN LBRACKET LFLOWER NEXT NUM RBRACKET RFLOWER\n    nextstmt :   FOR LBRACKET ID IN NUM COLON NUM RBRACKET LFLOWER NEXT statements RFLOWER\n             |   FOR LBRACKET ID IN ID RBRACKET LFLOWER NEXT statements RFLOWER\n             |   FOR LBRACKET ID IN NUM COLON NUM RBRACKET NEXT singleStatement\n             |   FOR LBRACKET ID IN ID RBRACKET NEXT singleStatement\n           \n    \n    statements : statements statement\n               | statement\n    \n    statement : list \n             | nextstmt\n             | empty\n    \n    singleStatement  : list \n                    | empty\n                    | nextstmt\n    \n    list : ID list \n         | ID\n    \n    empty :\n    '
+_lr_signature = 'ARROW COLON FOR ID IN LBRACKET LFLOWER NEXT NUM RBRACKET RFLOWER\n    nextstmt :   FOR LBRACKET ID IN NUM COLON NUM RBRACKET LFLOWER NEXT statements RFLOWER\n             |   FOR LBRACKET ID IN ID RBRACKET LFLOWER NEXT statements RFLOWER\n             |   FOR LBRACKET ID IN NUM COLON NUM RBRACKET NEXT singleStatement\n             |   FOR LBRACKET ID IN ID RBRACKET NEXT singleStatement\n           \n    \n    statements : statements statement\n               | statement\n    \n    statement : list \n             | nextstmt\n             | empty\n    \n    singleStatement  : list \n                    | empty\n                    | nextstmt\n    \n    list : ID list \n         | ID\n         | ID ARROW NUM\n    \n    empty :\n    '
     
-_lr_action_items = {'FOR':([0,11,13,14,15,16,17,18,20,21,22,23,24,25,27,28,29,30,31,32,33,],[2,2,2,-14,-4,-10,-11,-12,2,-6,-7,-8,-9,-13,2,-2,-5,2,-3,2,-1,]),'$end':([1,11,14,15,16,17,18,25,27,28,31,33,],[0,-15,-14,-4,-10,-11,-12,-13,-15,-2,-3,-1,]),'LBRACKET':([2,],[3,]),'ID':([3,5,11,13,14,15,16,17,18,20,21,22,23,24,25,27,28,29,30,31,32,33,],[4,6,14,14,14,-4,-10,-11,-12,14,-6,-7,-8,-9,-13,14,-2,-5,14,-3,14,-1,]),'IN':([4,],[5,]),'NUM':([5,9,],[7,12,]),'RBRACKET':([6,12,],[8,19,]),'COLON':([7,],[9,]),'LFLOWER':([8,19,],[10,26,]),'NEXT':([8,10,19,26,],[11,13,27,30,]),'RFLOWER':([11,13,14,15,16,17,18,20,21,22,23,24,25,27,28,29,30,31,32,33,],[-15,-15,-14,-4,-10,-11,-12,28,-6,-7,-8,-9,-13,-15,-2,-5,-15,-3,33,-1,]),}
+_lr_action_items = {'FOR':([0,11,13,14,15,16,17,18,20,21,22,23,24,25,28,29,30,31,32,33,34,35,],[2,2,2,-14,-4,-10,-11,-12,2,-6,-7,-8,-9,-13,2,-2,-5,-15,2,-3,2,-1,]),'$end':([1,11,14,15,16,17,18,25,28,29,31,33,35,],[0,-16,-14,-4,-10,-11,-12,-13,-16,-2,-15,-3,-1,]),'LBRACKET':([2,],[3,]),'ID':([3,5,11,13,14,15,16,17,18,20,21,22,23,24,25,28,29,30,31,32,33,34,35,],[4,6,14,14,14,-4,-10,-11,-12,14,-6,-7,-8,-9,-13,14,-2,-5,-15,14,-3,14,-1,]),'IN':([4,],[5,]),'NUM':([5,9,26,],[7,12,31,]),'RBRACKET':([6,12,],[8,19,]),'COLON':([7,],[9,]),'LFLOWER':([8,19,],[10,27,]),'NEXT':([8,10,19,27,],[11,13,28,32,]),'RFLOWER':([11,13,14,15,16,17,18,20,21,22,23,24,25,28,29,30,31,32,33,34,35,],[-16,-16,-14,-4,-10,-11,-12,29,-6,-7,-8,-9,-13,-16,-2,-5,-15,-16,-3,35,-1,]),'ARROW':([14,],[26,]),}
 
 _lr_action = {}
 for _k, _v in _lr_action_items.items():
@@ -17,7 +17,7 @@ for _k, _v in _lr_action_items.items():
       _lr_action[_x][_k] = _y
 del _lr_action_items
 
-_lr_goto_items = {'nextstmt':([0,11,13,20,27,30,32,],[1,18,23,23,18,23,23,]),'singleStatement':([11,27,],[15,31,]),'list':([11,13,14,20,27,30,32,],[16,22,25,22,16,22,22,]),'empty':([11,13,20,27,30,32,],[17,24,24,17,24,24,]),'statements':([13,30,],[20,32,]),'statement':([13,20,30,32,],[21,29,21,29,]),}
+_lr_goto_items = {'nextstmt':([0,11,13,20,28,32,34,],[1,18,23,23,18,23,23,]),'singleStatement':([11,28,],[15,33,]),'list':([11,13,14,20,28,32,34,],[16,22,25,22,16,22,22,]),'empty':([11,13,20,28,32,34,],[17,24,24,17,24,24,]),'statements':([13,32,],[20,34,]),'statement':([13,20,32,34,],[21,30,21,30,]),}
 
 _lr_goto = {}
 for _k, _v in _lr_goto_items.items():
@@ -27,19 +27,20 @@ for _k, _v in _lr_goto_items.items():
 del _lr_goto_items
 _lr_productions = [
   ("S' -> nextstmt","S'",1,None,None,None),
-  ('nextstmt -> FOR LBRACKET ID IN NUM COLON NUM RBRACKET LFLOWER NEXT statements RFLOWER','nextstmt',12,'p_nextstmt','next_parser.py',7),
-  ('nextstmt -> FOR LBRACKET ID IN ID RBRACKET LFLOWER NEXT statements RFLOWER','nextstmt',10,'p_nextstmt','next_parser.py',8),
-  ('nextstmt -> FOR LBRACKET ID IN NUM COLON NUM RBRACKET NEXT singleStatement','nextstmt',10,'p_nextstmt','next_parser.py',9),
-  ('nextstmt -> FOR LBRACKET ID IN ID RBRACKET NEXT singleStatement','nextstmt',8,'p_nextstmt','next_parser.py',10),
-  ('statements -> statements statement','statements',2,'p_statements','next_parser.py',36),
-  ('statements -> statement','statements',1,'p_statements','next_parser.py',37),
-  ('statement -> list','statement',1,'p_statement','next_parser.py',45),
-  ('statement -> nextstmt','statement',1,'p_statement','next_parser.py',46),
-  ('statement -> empty','statement',1,'p_statement','next_parser.py',47),
-  ('singleStatement -> list','singleStatement',1,'p_singleStatement','next_parser.py',53),
-  ('singleStatement -> empty','singleStatement',1,'p_singleStatement','next_parser.py',54),
-  ('singleStatement -> nextstmt','singleStatement',1,'p_singleStatement','next_parser.py',55),
-  ('list -> ID list','list',2,'p_list','next_parser.py',64),
-  ('list -> ID','list',1,'p_list','next_parser.py',65),
-  ('empty -> <empty>','empty',0,'p_empty','next_parser.py',74),
+  ('nextstmt -> FOR LBRACKET ID IN NUM COLON NUM RBRACKET LFLOWER NEXT statements RFLOWER','nextstmt',12,'p_nextstmt','next_parser.py',8),
+  ('nextstmt -> FOR LBRACKET ID IN ID RBRACKET LFLOWER NEXT statements RFLOWER','nextstmt',10,'p_nextstmt','next_parser.py',9),
+  ('nextstmt -> FOR LBRACKET ID IN NUM COLON NUM RBRACKET NEXT singleStatement','nextstmt',10,'p_nextstmt','next_parser.py',10),
+  ('nextstmt -> FOR LBRACKET ID IN ID RBRACKET NEXT singleStatement','nextstmt',8,'p_nextstmt','next_parser.py',11),
+  ('statements -> statements statement','statements',2,'p_statements','next_parser.py',37),
+  ('statements -> statement','statements',1,'p_statements','next_parser.py',38),
+  ('statement -> list','statement',1,'p_statement','next_parser.py',47),
+  ('statement -> nextstmt','statement',1,'p_statement','next_parser.py',48),
+  ('statement -> empty','statement',1,'p_statement','next_parser.py',49),
+  ('singleStatement -> list','singleStatement',1,'p_singleStatement','next_parser.py',55),
+  ('singleStatement -> empty','singleStatement',1,'p_singleStatement','next_parser.py',56),
+  ('singleStatement -> nextstmt','singleStatement',1,'p_singleStatement','next_parser.py',57),
+  ('list -> ID list','list',2,'p_list','next_parser.py',66),
+  ('list -> ID','list',1,'p_list','next_parser.py',67),
+  ('list -> ID ARROW NUM','list',3,'p_list','next_parser.py',68),
+  ('empty -> <empty>','empty',0,'p_empty','next_parser.py',77),
 ]

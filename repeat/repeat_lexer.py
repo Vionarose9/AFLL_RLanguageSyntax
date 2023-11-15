@@ -9,11 +9,17 @@ tokens = ('REPEAT',
         'EQUALS',
         'LFLOWER',
         'RFLOWER',
-        'ID','BREAK','IF')
+        'ID','BREAK','IF','ARROW')
+
+#defining tokens
 t_LBRACKET = r'\('
 t_RBRACKET=r'\)'
 t_RFLOWER=r'\}'
 t_LFLOWER=r'\{'
+
+def t_ARROW(t):
+    r'\<-'
+    return t
 
 def t_REPEAT(t):
     r'repeat'
@@ -40,6 +46,7 @@ t_NOT = r'!'
 t_AND = r'&&'
 t_OR = r'\|\|'
 
+#defining errors
 def t_error(t):
     print(f"Illegal character encountered {t.value[0]}")
     t.lexer.skip(1)

@@ -15,28 +15,30 @@ Rule 9     singleStatement -> empty
 Rule 10    singleStatement -> while_statement
 Rule 11    list -> ID list
 Rule 12    list -> ID
-Rule 13    empty -> <empty>
-Rule 14    conditions -> ID EQUALS ID
-Rule 15    conditions -> ID GREATER ID
-Rule 16    conditions -> ID LESSER ID
-Rule 17    conditions -> ID GREATER EQUALS ID
-Rule 18    conditions -> ID LESSER EQUALS ID
-Rule 19    conditions -> ID NOT EQUALS ID
-Rule 20    conditions -> conditions AND conditions
-Rule 21    conditions -> conditions OR conditions
-Rule 22    conditions -> ID
+Rule 13    list -> ID ARROW ID
+Rule 14    empty -> <empty>
+Rule 15    conditions -> ID EQUALS ID
+Rule 16    conditions -> ID GREATER ID
+Rule 17    conditions -> ID LESSER ID
+Rule 18    conditions -> ID GREATER EQUALS ID
+Rule 19    conditions -> ID LESSER EQUALS ID
+Rule 20    conditions -> ID NOT EQUALS ID
+Rule 21    conditions -> conditions AND conditions
+Rule 22    conditions -> conditions OR conditions
+Rule 23    conditions -> ID
 
 Terminals, with rules where they appear
 
-AND                  : 20
-EQUALS               : 14 17 18 19
-GREATER              : 15 17
-ID                   : 11 12 14 14 15 15 16 16 17 17 18 18 19 19 22
+AND                  : 21
+ARROW                : 13
+EQUALS               : 15 18 19 20
+GREATER              : 16 18
+ID                   : 11 12 13 13 15 15 16 16 17 17 18 18 19 19 20 20 23
 LBRACKET             : 1 2
-LESSER               : 16 18
+LESSER               : 17 19
 LFLOWER              : 1
-NOT                  : 19
-OR                   : 21
+NOT                  : 20
+OR                   : 22
 RBRACKET             : 1 2
 RFLOWER              : 1
 WHILE                : 1 2
@@ -44,7 +46,7 @@ error                :
 
 Nonterminals, with rules where they appear
 
-conditions           : 1 2 20 20 21 21
+conditions           : 1 2 21 21 22 22
 empty                : 7 9
 list                 : 5 8 11
 singleStatement      : 2
@@ -82,15 +84,15 @@ state 3
 
     (1) while_statement -> WHILE LBRACKET . conditions RBRACKET LFLOWER statements RFLOWER
     (2) while_statement -> WHILE LBRACKET . conditions RBRACKET singleStatement
-    (14) conditions -> . ID EQUALS ID
-    (15) conditions -> . ID GREATER ID
-    (16) conditions -> . ID LESSER ID
-    (17) conditions -> . ID GREATER EQUALS ID
-    (18) conditions -> . ID LESSER EQUALS ID
-    (19) conditions -> . ID NOT EQUALS ID
-    (20) conditions -> . conditions AND conditions
-    (21) conditions -> . conditions OR conditions
-    (22) conditions -> . ID
+    (15) conditions -> . ID EQUALS ID
+    (16) conditions -> . ID GREATER ID
+    (17) conditions -> . ID LESSER ID
+    (18) conditions -> . ID GREATER EQUALS ID
+    (19) conditions -> . ID LESSER EQUALS ID
+    (20) conditions -> . ID NOT EQUALS ID
+    (21) conditions -> . conditions AND conditions
+    (22) conditions -> . conditions OR conditions
+    (23) conditions -> . ID
 
     ID              shift and go to state 5
 
@@ -100,8 +102,8 @@ state 4
 
     (1) while_statement -> WHILE LBRACKET conditions . RBRACKET LFLOWER statements RFLOWER
     (2) while_statement -> WHILE LBRACKET conditions . RBRACKET singleStatement
-    (20) conditions -> conditions . AND conditions
-    (21) conditions -> conditions . OR conditions
+    (21) conditions -> conditions . AND conditions
+    (22) conditions -> conditions . OR conditions
 
     RBRACKET        shift and go to state 6
     AND             shift and go to state 7
@@ -110,21 +112,21 @@ state 4
 
 state 5
 
-    (14) conditions -> ID . EQUALS ID
-    (15) conditions -> ID . GREATER ID
-    (16) conditions -> ID . LESSER ID
-    (17) conditions -> ID . GREATER EQUALS ID
-    (18) conditions -> ID . LESSER EQUALS ID
-    (19) conditions -> ID . NOT EQUALS ID
-    (22) conditions -> ID .
+    (15) conditions -> ID . EQUALS ID
+    (16) conditions -> ID . GREATER ID
+    (17) conditions -> ID . LESSER ID
+    (18) conditions -> ID . GREATER EQUALS ID
+    (19) conditions -> ID . LESSER EQUALS ID
+    (20) conditions -> ID . NOT EQUALS ID
+    (23) conditions -> ID .
 
     EQUALS          shift and go to state 9
     GREATER         shift and go to state 10
     LESSER          shift and go to state 11
     NOT             shift and go to state 12
-    RBRACKET        reduce using rule 22 (conditions -> ID .)
-    AND             reduce using rule 22 (conditions -> ID .)
-    OR              reduce using rule 22 (conditions -> ID .)
+    RBRACKET        reduce using rule 23 (conditions -> ID .)
+    AND             reduce using rule 23 (conditions -> ID .)
+    OR              reduce using rule 23 (conditions -> ID .)
 
 
 state 6
@@ -136,7 +138,8 @@ state 6
     (10) singleStatement -> . while_statement
     (11) list -> . ID list
     (12) list -> . ID
-    (13) empty -> .
+    (13) list -> . ID ARROW ID
+    (14) empty -> .
     (1) while_statement -> . WHILE LBRACKET conditions RBRACKET LFLOWER statements RFLOWER
     (2) while_statement -> . WHILE LBRACKET conditions RBRACKET singleStatement
 
@@ -144,12 +147,12 @@ state 6
   ! shift/reduce conflict for WHILE resolved as shift
     LFLOWER         shift and go to state 13
     ID              shift and go to state 18
-    $end            reduce using rule 13 (empty -> .)
-    RFLOWER         reduce using rule 13 (empty -> .)
+    $end            reduce using rule 14 (empty -> .)
+    RFLOWER         reduce using rule 14 (empty -> .)
     WHILE           shift and go to state 2
 
-  ! ID              [ reduce using rule 13 (empty -> .) ]
-  ! WHILE           [ reduce using rule 13 (empty -> .) ]
+  ! ID              [ reduce using rule 14 (empty -> .) ]
+  ! WHILE           [ reduce using rule 14 (empty -> .) ]
 
     singleStatement                shift and go to state 14
     list                           shift and go to state 15
@@ -158,16 +161,16 @@ state 6
 
 state 7
 
-    (20) conditions -> conditions AND . conditions
-    (14) conditions -> . ID EQUALS ID
-    (15) conditions -> . ID GREATER ID
-    (16) conditions -> . ID LESSER ID
-    (17) conditions -> . ID GREATER EQUALS ID
-    (18) conditions -> . ID LESSER EQUALS ID
-    (19) conditions -> . ID NOT EQUALS ID
-    (20) conditions -> . conditions AND conditions
-    (21) conditions -> . conditions OR conditions
-    (22) conditions -> . ID
+    (21) conditions -> conditions AND . conditions
+    (15) conditions -> . ID EQUALS ID
+    (16) conditions -> . ID GREATER ID
+    (17) conditions -> . ID LESSER ID
+    (18) conditions -> . ID GREATER EQUALS ID
+    (19) conditions -> . ID LESSER EQUALS ID
+    (20) conditions -> . ID NOT EQUALS ID
+    (21) conditions -> . conditions AND conditions
+    (22) conditions -> . conditions OR conditions
+    (23) conditions -> . ID
 
     ID              shift and go to state 5
 
@@ -175,16 +178,16 @@ state 7
 
 state 8
 
-    (21) conditions -> conditions OR . conditions
-    (14) conditions -> . ID EQUALS ID
-    (15) conditions -> . ID GREATER ID
-    (16) conditions -> . ID LESSER ID
-    (17) conditions -> . ID GREATER EQUALS ID
-    (18) conditions -> . ID LESSER EQUALS ID
-    (19) conditions -> . ID NOT EQUALS ID
-    (20) conditions -> . conditions AND conditions
-    (21) conditions -> . conditions OR conditions
-    (22) conditions -> . ID
+    (22) conditions -> conditions OR . conditions
+    (15) conditions -> . ID EQUALS ID
+    (16) conditions -> . ID GREATER ID
+    (17) conditions -> . ID LESSER ID
+    (18) conditions -> . ID GREATER EQUALS ID
+    (19) conditions -> . ID LESSER EQUALS ID
+    (20) conditions -> . ID NOT EQUALS ID
+    (21) conditions -> . conditions AND conditions
+    (22) conditions -> . conditions OR conditions
+    (23) conditions -> . ID
 
     ID              shift and go to state 5
 
@@ -192,15 +195,15 @@ state 8
 
 state 9
 
-    (14) conditions -> ID EQUALS . ID
+    (15) conditions -> ID EQUALS . ID
 
     ID              shift and go to state 21
 
 
 state 10
 
-    (15) conditions -> ID GREATER . ID
-    (17) conditions -> ID GREATER . EQUALS ID
+    (16) conditions -> ID GREATER . ID
+    (18) conditions -> ID GREATER . EQUALS ID
 
     ID              shift and go to state 22
     EQUALS          shift and go to state 23
@@ -208,8 +211,8 @@ state 10
 
 state 11
 
-    (16) conditions -> ID LESSER . ID
-    (18) conditions -> ID LESSER . EQUALS ID
+    (17) conditions -> ID LESSER . ID
+    (19) conditions -> ID LESSER . EQUALS ID
 
     ID              shift and go to state 24
     EQUALS          shift and go to state 25
@@ -217,7 +220,7 @@ state 11
 
 state 12
 
-    (19) conditions -> ID NOT . EQUALS ID
+    (20) conditions -> ID NOT . EQUALS ID
 
     EQUALS          shift and go to state 26
 
@@ -232,18 +235,19 @@ state 13
     (7) statement -> . empty
     (11) list -> . ID list
     (12) list -> . ID
+    (13) list -> . ID ARROW ID
     (1) while_statement -> . WHILE LBRACKET conditions RBRACKET LFLOWER statements RFLOWER
     (2) while_statement -> . WHILE LBRACKET conditions RBRACKET singleStatement
-    (13) empty -> .
+    (14) empty -> .
 
   ! shift/reduce conflict for ID resolved as shift
   ! shift/reduce conflict for WHILE resolved as shift
     ID              shift and go to state 18
     WHILE           shift and go to state 2
-    RFLOWER         reduce using rule 13 (empty -> .)
+    RFLOWER         reduce using rule 14 (empty -> .)
 
-  ! ID              [ reduce using rule 13 (empty -> .) ]
-  ! WHILE           [ reduce using rule 13 (empty -> .) ]
+  ! ID              [ reduce using rule 14 (empty -> .) ]
+  ! WHILE           [ reduce using rule 14 (empty -> .) ]
 
     statements                     shift and go to state 27
     statement                      shift and go to state 28
@@ -295,13 +299,16 @@ state 18
 
     (11) list -> ID . list
     (12) list -> ID .
+    (13) list -> ID . ARROW ID
     (11) list -> . ID list
     (12) list -> . ID
+    (13) list -> . ID ARROW ID
 
   ! shift/reduce conflict for ID resolved as shift
     $end            reduce using rule 12 (list -> ID .)
     RFLOWER         reduce using rule 12 (list -> ID .)
     WHILE           reduce using rule 12 (list -> ID .)
+    ARROW           shift and go to state 33
     ID              shift and go to state 18
 
   ! ID              [ reduce using rule 12 (list -> ID .) ]
@@ -310,82 +317,82 @@ state 18
 
 state 19
 
-    (20) conditions -> conditions AND conditions .
-    (20) conditions -> conditions . AND conditions
-    (21) conditions -> conditions . OR conditions
+    (21) conditions -> conditions AND conditions .
+    (21) conditions -> conditions . AND conditions
+    (22) conditions -> conditions . OR conditions
 
   ! shift/reduce conflict for AND resolved as shift
   ! shift/reduce conflict for OR resolved as shift
-    RBRACKET        reduce using rule 20 (conditions -> conditions AND conditions .)
+    RBRACKET        reduce using rule 21 (conditions -> conditions AND conditions .)
     AND             shift and go to state 7
     OR              shift and go to state 8
 
-  ! AND             [ reduce using rule 20 (conditions -> conditions AND conditions .) ]
-  ! OR              [ reduce using rule 20 (conditions -> conditions AND conditions .) ]
+  ! AND             [ reduce using rule 21 (conditions -> conditions AND conditions .) ]
+  ! OR              [ reduce using rule 21 (conditions -> conditions AND conditions .) ]
 
 
 state 20
 
-    (21) conditions -> conditions OR conditions .
-    (20) conditions -> conditions . AND conditions
-    (21) conditions -> conditions . OR conditions
+    (22) conditions -> conditions OR conditions .
+    (21) conditions -> conditions . AND conditions
+    (22) conditions -> conditions . OR conditions
 
   ! shift/reduce conflict for AND resolved as shift
   ! shift/reduce conflict for OR resolved as shift
-    RBRACKET        reduce using rule 21 (conditions -> conditions OR conditions .)
+    RBRACKET        reduce using rule 22 (conditions -> conditions OR conditions .)
     AND             shift and go to state 7
     OR              shift and go to state 8
 
-  ! AND             [ reduce using rule 21 (conditions -> conditions OR conditions .) ]
-  ! OR              [ reduce using rule 21 (conditions -> conditions OR conditions .) ]
+  ! AND             [ reduce using rule 22 (conditions -> conditions OR conditions .) ]
+  ! OR              [ reduce using rule 22 (conditions -> conditions OR conditions .) ]
 
 
 state 21
 
-    (14) conditions -> ID EQUALS ID .
+    (15) conditions -> ID EQUALS ID .
 
-    RBRACKET        reduce using rule 14 (conditions -> ID EQUALS ID .)
-    AND             reduce using rule 14 (conditions -> ID EQUALS ID .)
-    OR              reduce using rule 14 (conditions -> ID EQUALS ID .)
+    RBRACKET        reduce using rule 15 (conditions -> ID EQUALS ID .)
+    AND             reduce using rule 15 (conditions -> ID EQUALS ID .)
+    OR              reduce using rule 15 (conditions -> ID EQUALS ID .)
 
 
 state 22
 
-    (15) conditions -> ID GREATER ID .
+    (16) conditions -> ID GREATER ID .
 
-    RBRACKET        reduce using rule 15 (conditions -> ID GREATER ID .)
-    AND             reduce using rule 15 (conditions -> ID GREATER ID .)
-    OR              reduce using rule 15 (conditions -> ID GREATER ID .)
+    RBRACKET        reduce using rule 16 (conditions -> ID GREATER ID .)
+    AND             reduce using rule 16 (conditions -> ID GREATER ID .)
+    OR              reduce using rule 16 (conditions -> ID GREATER ID .)
 
 
 state 23
 
-    (17) conditions -> ID GREATER EQUALS . ID
-
-    ID              shift and go to state 33
-
-
-state 24
-
-    (16) conditions -> ID LESSER ID .
-
-    RBRACKET        reduce using rule 16 (conditions -> ID LESSER ID .)
-    AND             reduce using rule 16 (conditions -> ID LESSER ID .)
-    OR              reduce using rule 16 (conditions -> ID LESSER ID .)
-
-
-state 25
-
-    (18) conditions -> ID LESSER EQUALS . ID
+    (18) conditions -> ID GREATER EQUALS . ID
 
     ID              shift and go to state 34
 
 
-state 26
+state 24
 
-    (19) conditions -> ID NOT EQUALS . ID
+    (17) conditions -> ID LESSER ID .
+
+    RBRACKET        reduce using rule 17 (conditions -> ID LESSER ID .)
+    AND             reduce using rule 17 (conditions -> ID LESSER ID .)
+    OR              reduce using rule 17 (conditions -> ID LESSER ID .)
+
+
+state 25
+
+    (19) conditions -> ID LESSER EQUALS . ID
 
     ID              shift and go to state 35
+
+
+state 26
+
+    (20) conditions -> ID NOT EQUALS . ID
+
+    ID              shift and go to state 36
 
 
 state 27
@@ -397,22 +404,23 @@ state 27
     (7) statement -> . empty
     (11) list -> . ID list
     (12) list -> . ID
+    (13) list -> . ID ARROW ID
     (1) while_statement -> . WHILE LBRACKET conditions RBRACKET LFLOWER statements RFLOWER
     (2) while_statement -> . WHILE LBRACKET conditions RBRACKET singleStatement
-    (13) empty -> .
+    (14) empty -> .
 
   ! shift/reduce conflict for RFLOWER resolved as shift
   ! shift/reduce conflict for ID resolved as shift
   ! shift/reduce conflict for WHILE resolved as shift
-    RFLOWER         shift and go to state 36
+    RFLOWER         shift and go to state 37
     ID              shift and go to state 18
     WHILE           shift and go to state 2
 
-  ! RFLOWER         [ reduce using rule 13 (empty -> .) ]
-  ! ID              [ reduce using rule 13 (empty -> .) ]
-  ! WHILE           [ reduce using rule 13 (empty -> .) ]
+  ! RFLOWER         [ reduce using rule 14 (empty -> .) ]
+  ! ID              [ reduce using rule 14 (empty -> .) ]
+  ! WHILE           [ reduce using rule 14 (empty -> .) ]
 
-    statement                      shift and go to state 37
+    statement                      shift and go to state 38
     list                           shift and go to state 29
     while_statement                shift and go to state 30
     empty                          shift and go to state 31
@@ -465,32 +473,39 @@ state 32
 
 state 33
 
-    (17) conditions -> ID GREATER EQUALS ID .
+    (13) list -> ID ARROW . ID
 
-    RBRACKET        reduce using rule 17 (conditions -> ID GREATER EQUALS ID .)
-    AND             reduce using rule 17 (conditions -> ID GREATER EQUALS ID .)
-    OR              reduce using rule 17 (conditions -> ID GREATER EQUALS ID .)
+    ID              shift and go to state 39
 
 
 state 34
 
-    (18) conditions -> ID LESSER EQUALS ID .
+    (18) conditions -> ID GREATER EQUALS ID .
 
-    RBRACKET        reduce using rule 18 (conditions -> ID LESSER EQUALS ID .)
-    AND             reduce using rule 18 (conditions -> ID LESSER EQUALS ID .)
-    OR              reduce using rule 18 (conditions -> ID LESSER EQUALS ID .)
+    RBRACKET        reduce using rule 18 (conditions -> ID GREATER EQUALS ID .)
+    AND             reduce using rule 18 (conditions -> ID GREATER EQUALS ID .)
+    OR              reduce using rule 18 (conditions -> ID GREATER EQUALS ID .)
 
 
 state 35
 
-    (19) conditions -> ID NOT EQUALS ID .
+    (19) conditions -> ID LESSER EQUALS ID .
 
-    RBRACKET        reduce using rule 19 (conditions -> ID NOT EQUALS ID .)
-    AND             reduce using rule 19 (conditions -> ID NOT EQUALS ID .)
-    OR              reduce using rule 19 (conditions -> ID NOT EQUALS ID .)
+    RBRACKET        reduce using rule 19 (conditions -> ID LESSER EQUALS ID .)
+    AND             reduce using rule 19 (conditions -> ID LESSER EQUALS ID .)
+    OR              reduce using rule 19 (conditions -> ID LESSER EQUALS ID .)
 
 
 state 36
+
+    (20) conditions -> ID NOT EQUALS ID .
+
+    RBRACKET        reduce using rule 20 (conditions -> ID NOT EQUALS ID .)
+    AND             reduce using rule 20 (conditions -> ID NOT EQUALS ID .)
+    OR              reduce using rule 20 (conditions -> ID NOT EQUALS ID .)
+
+
+state 37
 
     (1) while_statement -> WHILE LBRACKET conditions RBRACKET LFLOWER statements RFLOWER .
 
@@ -500,13 +515,23 @@ state 36
     WHILE           reduce using rule 1 (while_statement -> WHILE LBRACKET conditions RBRACKET LFLOWER statements RFLOWER .)
 
 
-state 37
+state 38
 
     (3) statements -> statements statement .
 
     RFLOWER         reduce using rule 3 (statements -> statements statement .)
     ID              reduce using rule 3 (statements -> statements statement .)
     WHILE           reduce using rule 3 (statements -> statements statement .)
+
+
+state 39
+
+    (13) list -> ID ARROW ID .
+
+    $end            reduce using rule 13 (list -> ID ARROW ID .)
+    RFLOWER         reduce using rule 13 (list -> ID ARROW ID .)
+    ID              reduce using rule 13 (list -> ID ARROW ID .)
+    WHILE           reduce using rule 13 (list -> ID ARROW ID .)
 
 WARNING: 
 WARNING: Conflicts:

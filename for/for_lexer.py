@@ -8,6 +8,7 @@ tokens = ('FOR',
         'RFLOWER',
         'ID',
         'NUM',
+        'ARROW'
         )
 
 def t_FOR(t):
@@ -25,8 +26,13 @@ t_RFLOWER = r'\}'
 def t_COLON(t):
     r'\:'
     return t
+
+def t_ARROW(t):
+    r'\<-'
+    return t
+
 def t_ID(t):
-    r'\b([a-zA-Z_=][a-zA-Z_0-9]*)\b'
+    r'\b([a-zA-Z_][a-zA-Z_0-9]*)\b'
     return t
 def t_NUM(t):
     r'[0-9][0-9]*'

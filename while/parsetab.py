@@ -6,9 +6,9 @@ _tabversion = '3.10'
 
 _lr_method = 'LALR'
 
-_lr_signature = 'AND EQUALS GREATER ID LBRACKET LESSER LFLOWER NOT OR RBRACKET RFLOWER WHILE\n    while_statement     : WHILE LBRACKET conditions RBRACKET LFLOWER statements RFLOWER\n                        | WHILE LBRACKET conditions RBRACKET singleStatement \n    \n    statements  : statements statement\n                | statement\n    \n    statement   : list \n                | while_statement\n                | empty\n    \n    singleStatement  : list \n                    | empty\n                    | while_statement\n    \n    list    : ID list\n            | ID\n    \n    empty :\n    \n    conditions  : ID EQUALS ID \n                | ID GREATER ID \n                | ID LESSER ID \n                | ID GREATER EQUALS ID \n                | ID LESSER EQUALS ID \n                | ID NOT EQUALS ID\n                | conditions AND conditions \n                | conditions OR conditions\n                | ID\n    '
+_lr_signature = 'AND ARROW EQUALS GREATER ID LBRACKET LESSER LFLOWER NOT OR RBRACKET RFLOWER WHILE\n    while_statement     : WHILE LBRACKET conditions RBRACKET LFLOWER statements RFLOWER\n                        | WHILE LBRACKET conditions RBRACKET singleStatement \n    \n    statements  : statements statement\n                | statement\n    \n    statement   : list \n                | while_statement\n                | empty\n    \n    singleStatement  : list \n                    | empty\n                    | while_statement\n    \n    list    : ID list\n            | ID\n            | ID ARROW ID\n    \n    empty :\n    \n    conditions  : ID EQUALS ID \n                | ID GREATER ID \n                | ID LESSER ID \n                | ID GREATER EQUALS ID \n                | ID LESSER EQUALS ID \n                | ID NOT EQUALS ID\n                | conditions AND conditions \n                | conditions OR conditions\n                | ID\n    '
     
-_lr_action_items = {'WHILE':([0,6,13,14,15,16,17,18,27,28,29,30,31,32,36,37,],[2,2,2,-2,-8,-9,-10,-12,2,-4,-5,-6,-7,-11,-1,-3,]),'$end':([1,6,14,15,16,17,18,32,36,],[0,-13,-2,-8,-9,-10,-12,-11,-1,]),'LBRACKET':([2,],[3,]),'ID':([3,6,7,8,9,10,11,13,14,15,16,17,18,23,25,26,27,28,29,30,31,32,36,37,],[5,18,5,5,21,22,24,18,-2,-8,-9,-10,18,33,34,35,18,-4,-5,-6,-7,-11,-1,-3,]),'RBRACKET':([4,5,19,20,21,22,24,33,34,35,],[6,-22,-20,-21,-14,-15,-16,-17,-18,-19,]),'AND':([4,5,19,20,21,22,24,33,34,35,],[7,-22,7,7,-14,-15,-16,-17,-18,-19,]),'OR':([4,5,19,20,21,22,24,33,34,35,],[8,-22,8,8,-14,-15,-16,-17,-18,-19,]),'EQUALS':([5,10,11,12,],[9,23,25,26,]),'GREATER':([5,],[10,]),'LESSER':([5,],[11,]),'NOT':([5,],[12,]),'LFLOWER':([6,],[13,]),'RFLOWER':([6,13,14,15,16,17,18,27,28,29,30,31,32,36,37,],[-13,-13,-2,-8,-9,-10,-12,36,-4,-5,-6,-7,-11,-1,-3,]),}
+_lr_action_items = {'WHILE':([0,6,13,14,15,16,17,18,27,28,29,30,31,32,37,38,39,],[2,2,2,-2,-8,-9,-10,-12,2,-4,-5,-6,-7,-11,-1,-3,-13,]),'$end':([1,6,14,15,16,17,18,32,37,39,],[0,-14,-2,-8,-9,-10,-12,-11,-1,-13,]),'LBRACKET':([2,],[3,]),'ID':([3,6,7,8,9,10,11,13,14,15,16,17,18,23,25,26,27,28,29,30,31,32,33,37,38,39,],[5,18,5,5,21,22,24,18,-2,-8,-9,-10,18,34,35,36,18,-4,-5,-6,-7,-11,39,-1,-3,-13,]),'RBRACKET':([4,5,19,20,21,22,24,34,35,36,],[6,-23,-21,-22,-15,-16,-17,-18,-19,-20,]),'AND':([4,5,19,20,21,22,24,34,35,36,],[7,-23,7,7,-15,-16,-17,-18,-19,-20,]),'OR':([4,5,19,20,21,22,24,34,35,36,],[8,-23,8,8,-15,-16,-17,-18,-19,-20,]),'EQUALS':([5,10,11,12,],[9,23,25,26,]),'GREATER':([5,],[10,]),'LESSER':([5,],[11,]),'NOT':([5,],[12,]),'LFLOWER':([6,],[13,]),'RFLOWER':([6,13,14,15,16,17,18,27,28,29,30,31,32,37,38,39,],[-14,-14,-2,-8,-9,-10,-12,37,-4,-5,-6,-7,-11,-1,-3,-13,]),'ARROW':([18,],[33,]),}
 
 _lr_action = {}
 for _k, _v in _lr_action_items.items():
@@ -17,7 +17,7 @@ for _k, _v in _lr_action_items.items():
       _lr_action[_x][_k] = _y
 del _lr_action_items
 
-_lr_goto_items = {'while_statement':([0,6,13,27,],[1,17,30,30,]),'conditions':([3,7,8,],[4,19,20,]),'singleStatement':([6,],[14,]),'list':([6,13,18,27,],[15,29,32,29,]),'empty':([6,13,27,],[16,31,31,]),'statements':([13,],[27,]),'statement':([13,27,],[28,37,]),}
+_lr_goto_items = {'while_statement':([0,6,13,27,],[1,17,30,30,]),'conditions':([3,7,8,],[4,19,20,]),'singleStatement':([6,],[14,]),'list':([6,13,18,27,],[15,29,32,29,]),'empty':([6,13,27,],[16,31,31,]),'statements':([13,],[27,]),'statement':([13,27,],[28,38,]),}
 
 _lr_goto = {}
 for _k, _v in _lr_goto_items.items():
@@ -27,26 +27,27 @@ for _k, _v in _lr_goto_items.items():
 del _lr_goto_items
 _lr_productions = [
   ("S' -> while_statement","S'",1,None,None,None),
-  ('while_statement -> WHILE LBRACKET conditions RBRACKET LFLOWER statements RFLOWER','while_statement',7,'p_while','while_parser.py',9),
-  ('while_statement -> WHILE LBRACKET conditions RBRACKET singleStatement','while_statement',5,'p_while','while_parser.py',10),
-  ('statements -> statements statement','statements',2,'p_statements','while_parser.py',19),
-  ('statements -> statement','statements',1,'p_statements','while_parser.py',20),
+  ('while_statement -> WHILE LBRACKET conditions RBRACKET LFLOWER statements RFLOWER','while_statement',7,'p_while','while_parser.py',7),
+  ('while_statement -> WHILE LBRACKET conditions RBRACKET singleStatement','while_statement',5,'p_while','while_parser.py',8),
+  ('statements -> statements statement','statements',2,'p_statements','while_parser.py',20),
+  ('statements -> statement','statements',1,'p_statements','while_parser.py',21),
   ('statement -> list','statement',1,'p_statement','while_parser.py',29),
   ('statement -> while_statement','statement',1,'p_statement','while_parser.py',30),
   ('statement -> empty','statement',1,'p_statement','while_parser.py',31),
-  ('singleStatement -> list','singleStatement',1,'p_singleStatement','while_parser.py',40),
-  ('singleStatement -> empty','singleStatement',1,'p_singleStatement','while_parser.py',41),
-  ('singleStatement -> while_statement','singleStatement',1,'p_singleStatement','while_parser.py',42),
-  ('list -> ID list','list',2,'p_list','while_parser.py',51),
-  ('list -> ID','list',1,'p_list','while_parser.py',52),
-  ('empty -> <empty>','empty',0,'p_empty','while_parser.py',62),
-  ('conditions -> ID EQUALS ID','conditions',3,'p_conditions','while_parser.py',68),
-  ('conditions -> ID GREATER ID','conditions',3,'p_conditions','while_parser.py',69),
-  ('conditions -> ID LESSER ID','conditions',3,'p_conditions','while_parser.py',70),
-  ('conditions -> ID GREATER EQUALS ID','conditions',4,'p_conditions','while_parser.py',71),
-  ('conditions -> ID LESSER EQUALS ID','conditions',4,'p_conditions','while_parser.py',72),
-  ('conditions -> ID NOT EQUALS ID','conditions',4,'p_conditions','while_parser.py',73),
-  ('conditions -> conditions AND conditions','conditions',3,'p_conditions','while_parser.py',74),
-  ('conditions -> conditions OR conditions','conditions',3,'p_conditions','while_parser.py',75),
-  ('conditions -> ID','conditions',1,'p_conditions','while_parser.py',76),
+  ('singleStatement -> list','singleStatement',1,'p_singleStatement','while_parser.py',39),
+  ('singleStatement -> empty','singleStatement',1,'p_singleStatement','while_parser.py',40),
+  ('singleStatement -> while_statement','singleStatement',1,'p_singleStatement','while_parser.py',41),
+  ('list -> ID list','list',2,'p_list','while_parser.py',49),
+  ('list -> ID','list',1,'p_list','while_parser.py',50),
+  ('list -> ID ARROW ID','list',3,'p_list','while_parser.py',51),
+  ('empty -> <empty>','empty',0,'p_empty','while_parser.py',60),
+  ('conditions -> ID EQUALS ID','conditions',3,'p_conditions','while_parser.py',65),
+  ('conditions -> ID GREATER ID','conditions',3,'p_conditions','while_parser.py',66),
+  ('conditions -> ID LESSER ID','conditions',3,'p_conditions','while_parser.py',67),
+  ('conditions -> ID GREATER EQUALS ID','conditions',4,'p_conditions','while_parser.py',68),
+  ('conditions -> ID LESSER EQUALS ID','conditions',4,'p_conditions','while_parser.py',69),
+  ('conditions -> ID NOT EQUALS ID','conditions',4,'p_conditions','while_parser.py',70),
+  ('conditions -> conditions AND conditions','conditions',3,'p_conditions','while_parser.py',71),
+  ('conditions -> conditions OR conditions','conditions',3,'p_conditions','while_parser.py',72),
+  ('conditions -> ID','conditions',1,'p_conditions','while_parser.py',73),
 ]

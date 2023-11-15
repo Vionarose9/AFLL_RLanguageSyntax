@@ -6,9 +6,9 @@ _tabversion = '3.10'
 
 _lr_method = 'LALR'
 
-_lr_signature = 'COLON FOR ID IN LBRACE LFLOWER NUM RBRACE RFLOWER\n    for_statement : FOR LBRACE ID IN NUM COLON NUM RBRACE LFLOWER statements RFLOWER\n      | FOR LBRACE ID IN ID RBRACE LFLOWER statements RFLOWER\n      | FOR LBRACE ID IN NUM COLON NUM RBRACE singleStatement\n      | FOR LBRACE ID IN ID RBRACE singleStatement\n    \n    statements  : statements statement\n                | statement\n    \n    statement   : list \n                | for_statement\n                | empty\n    \n    singleStatement : list\n                    | empty\n                    | for_statement\n    \n    list    : ID list\n            | ID\n    \n    empty :\n    '
+_lr_signature = 'ARROW COLON FOR ID IN LBRACE LFLOWER NUM RBRACE RFLOWER\n    for_statement : FOR LBRACE ID IN NUM COLON NUM RBRACE LFLOWER statements RFLOWER\n      | FOR LBRACE ID IN ID RBRACE LFLOWER statements RFLOWER\n      | FOR LBRACE ID IN NUM COLON NUM RBRACE singleStatement\n      | FOR LBRACE ID IN ID RBRACE singleStatement\n    \n    statements  : statements statement\n                | statement\n    \n    statement   : list \n                | for_statement\n                | empty\n    \n    singleStatement : list\n                    | empty\n                    | for_statement\n    \n    list    : ID list\n            | ID\n            | ID ARROW NUM\n    \n    empty :\n    '
     
-_lr_action_items = {'FOR':([0,8,10,11,12,13,14,15,17,18,19,20,21,22,23,24,25,26,27,28,29,],[2,2,-14,2,-4,-10,-11,-12,-13,2,-6,-7,-8,-9,2,-2,-5,2,-3,2,-1,]),'$end':([1,8,10,12,13,14,15,17,23,24,27,29,],[0,-15,-14,-4,-10,-11,-12,-13,-15,-2,-3,-1,]),'LBRACE':([2,],[3,]),'ID':([3,5,8,10,11,12,13,14,15,17,18,19,20,21,22,23,24,25,26,27,28,29,],[4,6,10,10,10,-4,-10,-11,-12,-13,10,-6,-7,-8,-9,10,-2,-5,10,-3,10,-1,]),'IN':([4,],[5,]),'NUM':([5,9,],[7,16,]),'RBRACE':([6,16,],[8,23,]),'COLON':([7,],[9,]),'LFLOWER':([8,23,],[11,26,]),'RFLOWER':([8,10,11,12,13,14,15,17,18,19,20,21,22,23,24,25,26,27,28,29,],[-15,-14,-15,-4,-10,-11,-12,-13,24,-6,-7,-8,-9,-15,-2,-5,-15,-3,29,-1,]),}
+_lr_action_items = {'FOR':([0,8,10,11,12,13,14,15,17,19,20,21,22,23,24,25,26,27,28,29,30,31,],[2,2,-14,2,-4,-10,-11,-12,-13,2,-6,-7,-8,-9,2,-15,-2,-5,2,-3,2,-1,]),'$end':([1,8,10,12,13,14,15,17,24,25,26,29,31,],[0,-16,-14,-4,-10,-11,-12,-13,-16,-15,-2,-3,-1,]),'LBRACE':([2,],[3,]),'ID':([3,5,8,10,11,12,13,14,15,17,19,20,21,22,23,24,25,26,27,28,29,30,31,],[4,6,10,10,10,-4,-10,-11,-12,-13,10,-6,-7,-8,-9,10,-15,-2,-5,10,-3,10,-1,]),'IN':([4,],[5,]),'NUM':([5,9,18,],[7,16,25,]),'RBRACE':([6,16,],[8,24,]),'COLON':([7,],[9,]),'LFLOWER':([8,24,],[11,28,]),'RFLOWER':([8,10,11,12,13,14,15,17,19,20,21,22,23,24,25,26,27,28,29,30,31,],[-16,-14,-16,-4,-10,-11,-12,-13,26,-6,-7,-8,-9,-16,-15,-2,-5,-16,-3,31,-1,]),'ARROW':([10,],[18,]),}
 
 _lr_action = {}
 for _k, _v in _lr_action_items.items():
@@ -17,7 +17,7 @@ for _k, _v in _lr_action_items.items():
       _lr_action[_x][_k] = _y
 del _lr_action_items
 
-_lr_goto_items = {'for_statement':([0,8,11,18,23,26,28,],[1,15,21,21,15,21,21,]),'singleStatement':([8,23,],[12,27,]),'list':([8,10,11,18,23,26,28,],[13,17,20,20,13,20,20,]),'empty':([8,11,18,23,26,28,],[14,22,22,14,22,22,]),'statements':([11,26,],[18,28,]),'statement':([11,18,26,28,],[19,25,19,25,]),}
+_lr_goto_items = {'for_statement':([0,8,11,19,24,28,30,],[1,15,22,22,15,22,22,]),'singleStatement':([8,24,],[12,29,]),'list':([8,10,11,19,24,28,30,],[13,17,21,21,13,21,21,]),'empty':([8,11,19,24,28,30,],[14,23,23,14,23,23,]),'statements':([11,28,],[19,30,]),'statement':([11,19,28,30,],[20,27,20,27,]),}
 
 _lr_goto = {}
 for _k, _v in _lr_goto_items.items():
@@ -27,19 +27,20 @@ for _k, _v in _lr_goto_items.items():
 del _lr_goto_items
 _lr_productions = [
   ("S' -> for_statement","S'",1,None,None,None),
-  ('for_statement -> FOR LBRACE ID IN NUM COLON NUM RBRACE LFLOWER statements RFLOWER','for_statement',11,'p_while','for_parser.py',8),
-  ('for_statement -> FOR LBRACE ID IN ID RBRACE LFLOWER statements RFLOWER','for_statement',9,'p_while','for_parser.py',9),
-  ('for_statement -> FOR LBRACE ID IN NUM COLON NUM RBRACE singleStatement','for_statement',9,'p_while','for_parser.py',10),
-  ('for_statement -> FOR LBRACE ID IN ID RBRACE singleStatement','for_statement',7,'p_while','for_parser.py',11),
-  ('statements -> statements statement','statements',2,'p_statements','for_parser.py',29),
-  ('statements -> statement','statements',1,'p_statements','for_parser.py',30),
-  ('statement -> list','statement',1,'p_statement','for_parser.py',39),
-  ('statement -> for_statement','statement',1,'p_statement','for_parser.py',40),
-  ('statement -> empty','statement',1,'p_statement','for_parser.py',41),
-  ('singleStatement -> list','singleStatement',1,'p_singleStatement','for_parser.py',46),
-  ('singleStatement -> empty','singleStatement',1,'p_singleStatement','for_parser.py',47),
-  ('singleStatement -> for_statement','singleStatement',1,'p_singleStatement','for_parser.py',48),
-  ('list -> ID list','list',2,'p_list','for_parser.py',54),
-  ('list -> ID','list',1,'p_list','for_parser.py',55),
-  ('empty -> <empty>','empty',0,'p_empty','for_parser.py',60),
+  ('for_statement -> FOR LBRACE ID IN NUM COLON NUM RBRACE LFLOWER statements RFLOWER','for_statement',11,'p_while','for_parser.py',6),
+  ('for_statement -> FOR LBRACE ID IN ID RBRACE LFLOWER statements RFLOWER','for_statement',9,'p_while','for_parser.py',7),
+  ('for_statement -> FOR LBRACE ID IN NUM COLON NUM RBRACE singleStatement','for_statement',9,'p_while','for_parser.py',8),
+  ('for_statement -> FOR LBRACE ID IN ID RBRACE singleStatement','for_statement',7,'p_while','for_parser.py',9),
+  ('statements -> statements statement','statements',2,'p_statements','for_parser.py',27),
+  ('statements -> statement','statements',1,'p_statements','for_parser.py',28),
+  ('statement -> list','statement',1,'p_statement','for_parser.py',36),
+  ('statement -> for_statement','statement',1,'p_statement','for_parser.py',37),
+  ('statement -> empty','statement',1,'p_statement','for_parser.py',38),
+  ('singleStatement -> list','singleStatement',1,'p_singleStatement','for_parser.py',42),
+  ('singleStatement -> empty','singleStatement',1,'p_singleStatement','for_parser.py',43),
+  ('singleStatement -> for_statement','singleStatement',1,'p_singleStatement','for_parser.py',44),
+  ('list -> ID list','list',2,'p_list','for_parser.py',48),
+  ('list -> ID','list',1,'p_list','for_parser.py',49),
+  ('list -> ID ARROW NUM','list',3,'p_list','for_parser.py',50),
+  ('empty -> <empty>','empty',0,'p_empty','for_parser.py',54),
 ]
